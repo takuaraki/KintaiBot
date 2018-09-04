@@ -17,6 +17,7 @@ global.doPost = (event: PostEvent): void => {
   var bodyText = '【A休】9/2 体調不良のため';
   var targetDate = targetDateExtractor.extract(bodyText);
   kintaiService.register(new KintaiInfo(targetDate, 'test', bodyText));
+  sendToSlack('save kintai');
 };
 
 class PostEvent {
@@ -31,3 +32,5 @@ class PostEvent {
     name: string;
   };
 }
+
+declare function sendToSlack(text: string);
