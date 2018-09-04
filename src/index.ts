@@ -10,17 +10,20 @@ global.createNewFile = (): void => {
   ss.getRange('A2').setValue('Happy gas!');
 };
 
-global.doPost = (event: PostEvent): void => {
+global.doPost = (event: SlackPostEvent): void => {
+  saveKintai(event.text);
+};
+
+function saveKintai(text: string) {
   var now = new Date();
   var kintaiService = new KintaiService(now);
   var targetDateExtractor = new TargetDateExtractor(now);
-  var bodyText = '【A休】9/2 体調不良のため';
-  var targetDate = targetDateExtractor.extract(bodyText);
-  kintaiService.register(new KintaiInfo(targetDate, 'test', bodyText));
+  var targetDate = targetDateExtractor.extract(text);
+  kintaiService.register(new KintaiInfo(targetDate, 'test', text));
   sendToSlack('save kintai');
-};
+}
 
-class PostEvent {
+class SlackPostEvent {
   queryString: string;
   parameter: { [key: string]: string };
   parameters: { [key: string]: [string] };
@@ -31,6 +34,10 @@ class PostEvent {
     contents: string;
     name: string;
   };
+
+  get text(): string {
+    return this.parameter['text'];
+  }
 }
 
 declare function sendToSlack(text: string);
