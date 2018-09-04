@@ -1,14 +1,8 @@
-import { SheetService } from './sheet.service';
 import { KintaiService } from './KintaiService';
 import { KintaiInfo } from './KintaiInfo';
 import { TargetDateExtractor } from './TargetDateExtractor';
 
 declare var global: any;
-
-global.createNewFile = (): void => {
-  const ss = SheetService.createInitialFile('New file');
-  ss.getRange('A2').setValue('Happy gas!');
-};
 
 global.doPost = (event: SlackPostEvent): void => {
   saveKintai(event.text);
