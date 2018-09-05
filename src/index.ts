@@ -1,6 +1,7 @@
 import { KintaiService } from './KintaiService';
 import { KintaiInfo } from './KintaiInfo';
 import { TargetDateExtractor } from './TargetDateExtractor';
+import { KintaiTypeExtractor } from './KintaiTypeExtractor';
 
 declare var global: any;
 
@@ -19,10 +20,11 @@ function saveKintai(userName: string, text: string) {
   var kintaiService = new KintaiService(now);
   var targetDateExtractor = new TargetDateExtractor(now);
   var targetDate = targetDateExtractor.extract(text);
-  kintaiService.register(new KintaiInfo(targetDate, 'test', text));
+  let kintaiType = KintaiTypeExtractor.extract(text);
+  kintaiService.register(new KintaiInfo(targetDate, kintaiType, 'test', text));
   sendToSlack(
     '#bot-test',
-    `I saved Kintai. \`name: ${userName} , date: ${targetDate}, text: ${text}\``
+    `I saved Kintai. \`date: ${targetDate}, type: ${kintaiType}, name: ${userName} , text: ${text}\``
   );
 }
 

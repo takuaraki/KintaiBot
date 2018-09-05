@@ -1,6 +1,6 @@
 import Spreadsheet = GoogleAppsScript.Spreadsheet.Spreadsheet;
 import Sheet = GoogleAppsScript.Spreadsheet.Sheet;
-import { KintaiInfo } from './KintaiInfo';
+import { KintaiInfo, KintaiType } from './KintaiInfo';
 
 /**
  * 勤怠を管理するクラス
@@ -35,8 +35,10 @@ export class KintaiService {
         break;
       }
     }
-    var arrData = [[kintai.getTargetDate(), kintai.getUserName(), kintai.getBodyText()]];
-    this.sheet.getRange(newLineRow, 1, 1, 3).setValues(arrData);
+    var arrData = [
+      [kintai.getTargetDate(), kintai.getType(), kintai.getUserName(), kintai.getBodyText()]
+    ];
+    this.sheet.getRange(newLineRow, 1, 1, 4).setValues(arrData);
   }
 
   /**
@@ -59,9 +61,10 @@ export class KintaiService {
         date.getMonth() == this.now.getMonth() &&
         date.getDate() == this.now.getDate()
       ) {
-        var name = kintaiValues[row][1] as string;
-        var text = kintaiValues[row][2] as string;
-        kintaiInfoArray.push(new KintaiInfo(targetDate, name, text));
+        var type = KintaiType.convert(kintaiValues[row][1] as string);
+        var name = kintaiValues[row][2] as string;
+        var text = kintaiValues[row][3] as string;
+        kintaiInfoArray.push(new KintaiInfo(targetDate, type, name, text));
       }
     }
     return kintaiInfoArray;
