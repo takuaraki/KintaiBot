@@ -55,4 +55,18 @@ namespace KintaiType {
     }
     return KintaiType.その他;
   }
+
+  export function getIndex(type: KintaiType): number {
+    switch (type) {
+      case KintaiType.A休:
+        return 0;
+      case KintaiType.AM休:
+        return 1;
+      case KintaiType.PM休:
+        return 2;
+      case KintaiType.FT:
+        return 3;
+    }
+    return 4; // その他
+  }
 }

@@ -1,5 +1,5 @@
 import { KintaiService } from './KintaiService';
-import { KintaiInfo } from './KintaiInfo';
+import { KintaiInfo, KintaiType } from './KintaiInfo';
 import { TargetDateExtractor } from './TargetDateExtractor';
 import { KintaiTypeExtractor } from './KintaiTypeExtractor';
 
@@ -40,9 +40,49 @@ function sendTodaysKintai() {
 
 function generateTodaysKintaiMessage(today: string, kintaiInfoArray: Array<KintaiInfo>): string {
   var message = `${today} の勤怠です。\n\`\`\`\n`;
-  kintaiInfoArray.forEach(kintaiInfo => {
-    message += `${kintaiInfo.getUserName()} ${kintaiInfo.getBodyText()}\n`;
+
+  let A休_Array = kintaiInfoArray.filter(kintaiInfo => {
+    return kintaiInfo.getType() == KintaiType.A休;
   });
+  if (A休_Array.length > 0) {
+    message += '[A休]\n';
+    A休_Array.forEach(kintaiInfo => {
+      message += `${kintaiInfo.getUserName()} ${kintaiInfo.getBodyText()}\n`;
+    });
+    message += '\n';
+  }
+
+  let AM休_Array = kintaiInfoArray.filter(kintaiInfo => {
+    return kintaiInfo.getType() == KintaiType.AM休;
+  });
+  if (AM休_Array.length > 0) {
+    message += '[AM休]\n';
+    AM休_Array.forEach(kintaiInfo => {
+      message += `${kintaiInfo.getUserName()} ${kintaiInfo.getBodyText()}\n`;
+    });
+    message += '\n';
+  }
+
+  let PM休_Array = kintaiInfoArray.filter(kintaiInfo => {
+    return kintaiInfo.getType() == KintaiType.PM休;
+  });
+  if (PM休_Array.length > 0) {
+    message += '[PM休]\n';
+    PM休_Array.forEach(kintaiInfo => {
+      message += `${kintaiInfo.getUserName()} ${kintaiInfo.getBodyText()}\n`;
+    });
+    message += '\n';
+  }
+
+  let FT_Array = kintaiInfoArray.filter(kintaiInfo => {
+    return kintaiInfo.getType() == KintaiType.FT;
+  });
+  if (FT_Array.length > 0) {
+    message += '[FT]\n';
+    FT_Array.forEach(kintaiInfo => {
+      message += `${kintaiInfo.getUserName()} ${kintaiInfo.getBodyText()}\n`;
+    });
+  }
   message += '```';
   return message;
 }
