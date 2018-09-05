@@ -49,7 +49,7 @@ export class KintaiService {
     var kintaiInfoArray = new Array<KintaiInfo>();
 
     var maxRowCount = 10000;
-    var kintaiValues = this.sheet.getSheetValues(1, 1, maxRowCount, 3);
+    var kintaiValues = this.sheet.getSheetValues(1, 1, maxRowCount, 4);
     for (var row = 1; row < maxRowCount; row++) {
       var cellData = kintaiValues[row][0];
       if (cellData == '') {
