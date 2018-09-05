@@ -21,7 +21,7 @@ function saveKintai(userName: string, text: string) {
   var targetDateExtractor = new TargetDateExtractor(now);
   var targetDate = targetDateExtractor.extract(text);
   let kintaiType = KintaiTypeExtractor.extract(text);
-  kintaiService.register(new KintaiInfo(targetDate, kintaiType, 'test', text));
+  kintaiService.register(new KintaiInfo(targetDate, kintaiType, userName, text));
   sendToSlack(
     '#bot-test',
     `I saved Kintai. \`date: ${targetDate}, type: ${kintaiType}, name: ${userName} , text: ${text}\``
