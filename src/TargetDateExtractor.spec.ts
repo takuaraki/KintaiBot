@@ -46,5 +46,26 @@ describe('TargetDateExtractor', () => {
             expect(tester.extract('【A休申請】2018年09月02日 私用のため'))
             .toBe(`${now.getFullYear()}/09/02`)
         })
+
+        it('hyphen divide case1', () => {
+            expect(tester.extract('【A休申請】9-12 私用のため'))
+            .toBe(`${now.getFullYear()}/9/12`)
+        })
+        it('hyphen divide case2', () => {
+            expect(tester.extract('【A休申請】2018-9-12 私用のため'))
+            .toBe(`${now.getFullYear()}/9/12`)
+        })
+        it('hyphen divide case3', () => {
+            expect(tester.extract('【A休申請】09-12 私用のため'))
+            .toBe(`${now.getFullYear()}/09/12`)
+        })
+        it('hyphen divide case4', () => {
+            expect(tester.extract('【A休申請】09-02 私用のため'))
+            .toBe(`${now.getFullYear()}/09/02`)
+        })
+        it('hyphen divide case5', () => {
+            expect(tester.extract('【A休申請】2018-09-02 私用のため'))
+            .toBe(`${now.getFullYear()}/09/02`)
+        })
     })
 })
