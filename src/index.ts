@@ -7,7 +7,7 @@ declare var global: any;
 
 global.doPost = (event: PostEvent): void => {
   var text = event.parameter['text'];
-  if (text == '今日の勤怠は？') {
+  if (text == 'Reminder: 今日の勤怠は？') {
     sendTodaysKintai();
   } else {
     var userName = event.parameter['user_name'];
@@ -34,7 +34,7 @@ function sendTodaysKintai() {
   var kintaiInfoArray = kintaiService.getTodaysKintai();
   if (kintaiInfoArray.length > 0) {
     var today = `${now.getFullYear()}/${now.getMonth() + 1}/${now.getDate()}`;
-    sendToSlack('#bot-test', generateTodaysKintaiMessage(today, kintaiInfoArray));
+    sendToSlack('#勤怠_開発部', generateTodaysKintaiMessage(today, kintaiInfoArray));
   }
 }
 
