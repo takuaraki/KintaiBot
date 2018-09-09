@@ -21,6 +21,16 @@ export class TargetDateExtractor {
     if (matchResult == null) {
       matchResult = text.match(this.regexpGappi);
     }
-    return `${this.now.getFullYear()}/${matchResult[1]}/${matchResult[2]}`;
+    var year = this.now.getFullYear();
+    let month = matchResult[1];
+    let day = matchResult[2];
+    if (parseInt(month) < this.now.getMonth() + 1) {
+      year += 1;
+    } else if (parseInt(month) == this.now.getMonth() + 1) {
+      if (parseInt(day) < this.now.getDate()) {
+        year += 1;
+      }
+    }
+    return `${year}/${month}/${day}`;
   }
 }
