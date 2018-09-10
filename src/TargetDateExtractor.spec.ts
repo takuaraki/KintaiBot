@@ -8,7 +8,7 @@ describe('TargetDateExtractor', () => {
     now.setMonth(9 - 1); // 9月
     now.setDate(4); // 4日
     let tester = new TargetDateExtractor(now);
-    
+
     it('slash divide case1. M/dd', () => {
       expect(tester.extract('【A休申請】9/12 私用のため')).toBe(`${now.getFullYear()}/9/12`);
     });
