@@ -2,6 +2,7 @@ import { KintaiService } from './KintaiService';
 import { KintaiInfo, KintaiType } from './KintaiInfo';
 import { TargetDateExtractor } from './TargetDateExtractor';
 import { KintaiTypeExtractor } from './KintaiTypeExtractor';
+import { MessageGenerator } from './MessageGenerator';
 
 declare var global: any;
 
@@ -34,57 +35,8 @@ function sendTodaysKintai() {
   var kintaiInfoArray = kintaiService.getTodaysKintai();
   if (kintaiInfoArray.length > 0) {
     var today = `${now.getFullYear()}/${now.getMonth() + 1}/${now.getDate()}`;
-    sendToSlack('#勤怠_開発部', generateTodaysKintaiMessage(today, kintaiInfoArray));
+    sendToSlack('#勤怠_開発部', MessageGenerator.generate(today, kintaiInfoArray));
   }
-}
-
-function generateTodaysKintaiMessage(today: string, kintaiInfoArray: Array<KintaiInfo>): string {
-  var message = `${today} の勤怠です。\n\`\`\`\n`;
-
-  let A休_Array = kintaiInfoArray.filter(kintaiInfo => {
-    return kintaiInfo.getType() == KintaiType.A休;
-  });
-  if (A休_Array.length > 0) {
-    message += '[A休]\n';
-    A休_Array.forEach(kintaiInfo => {
-      message += `${kintaiInfo.getUserName()} ${kintaiInfo.getBodyText()}\n`;
-    });
-    message += '\n';
-  }
-
-  let AM休_Array = kintaiInfoArray.filter(kintaiInfo => {
-    return kintaiInfo.getType() == KintaiType.AM休;
-  });
-  if (AM休_Array.length > 0) {
-    message += '[AM休]\n';
-    AM休_Array.forEach(kintaiInfo => {
-      message += `${kintaiInfo.getUserName()} ${kintaiInfo.getBodyText()}\n`;
-    });
-    message += '\n';
-  }
-
-  let PM休_Array = kintaiInfoArray.filter(kintaiInfo => {
-    return kintaiInfo.getType() == KintaiType.PM休;
-  });
-  if (PM休_Array.length > 0) {
-    message += '[PM休]\n';
-    PM休_Array.forEach(kintaiInfo => {
-      message += `${kintaiInfo.getUserName()} ${kintaiInfo.getBodyText()}\n`;
-    });
-    message += '\n';
-  }
-
-  let FT_Array = kintaiInfoArray.filter(kintaiInfo => {
-    return kintaiInfo.getType() == KintaiType.FT;
-  });
-  if (FT_Array.length > 0) {
-    message += '[FT]\n';
-    FT_Array.forEach(kintaiInfo => {
-      message += `${kintaiInfo.getUserName()} ${kintaiInfo.getBodyText()}\n`;
-    });
-  }
-  message += '```';
-  return message;
 }
 
 class PostEvent {
