@@ -21,10 +21,11 @@ export class MessageGenerator {
     });
     if (AM休_Array.length > 0) {
       message += '[AM休]\n';
+      let tableData = new Array<Array<string>>();
       AM休_Array.forEach(kintaiInfo => {
-        message += `${kintaiInfo.getUserName()} ${kintaiInfo.getBodyText()}\n`;
+        tableData.push([kintaiInfo.getUserName(), kintaiInfo.getBodyText()]);
       });
-      message += '\n';
+      message += `${MessageGenerator.createTable(tableData)}\n`;
     }
 
     let PM休_Array = kintaiInfoArray.filter(kintaiInfo => {
@@ -32,10 +33,11 @@ export class MessageGenerator {
     });
     if (PM休_Array.length > 0) {
       message += '[PM休]\n';
+      let tableData = new Array<Array<string>>();
       PM休_Array.forEach(kintaiInfo => {
-        message += `${kintaiInfo.getUserName()} ${kintaiInfo.getBodyText()}\n`;
+        tableData.push([kintaiInfo.getUserName(), kintaiInfo.getBodyText()]);
       });
-      message += '\n';
+      message += `${MessageGenerator.createTable(tableData)}\n`;
     }
 
     let FT_Array = kintaiInfoArray.filter(kintaiInfo => {
@@ -43,9 +45,11 @@ export class MessageGenerator {
     });
     if (FT_Array.length > 0) {
       message += '[FT]\n';
+      let tableData = new Array<Array<string>>();
       FT_Array.forEach(kintaiInfo => {
-        message += `${kintaiInfo.getUserName()} ${kintaiInfo.getBodyText()}\n`;
+        tableData.push([kintaiInfo.getUserName(), kintaiInfo.getBodyText()]);
       });
+      message += `${MessageGenerator.createTable(tableData)}`;
     }
     message += '```';
 
