@@ -61,7 +61,7 @@ export class MessageGenerator {
       その他_Array.forEach(kintaiInfo => {
         tableData.push([kintaiInfo.getUserName(), kintaiInfo.getBodyText()]);
       });
-      message += `${MessageGenerator.createTable(tableData)}`;
+      message += `${MessageGenerator.createTable(tableData)}\n`;
     }
 
     message += '```';
