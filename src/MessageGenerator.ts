@@ -51,8 +51,20 @@ export class MessageGenerator {
       });
       message += `${MessageGenerator.createTable(tableData)}`;
     }
-    message += '```';
 
+    let その他_Array = kintaiInfoArray.filter(kintaiInfo => {
+      return kintaiInfo.getType() == KintaiType.その他;
+    });
+    if (その他_Array.length > 0) {
+      message += '\n[その他]\n';
+      let tableData = new Array<Array<string>>();
+      その他_Array.forEach(kintaiInfo => {
+        tableData.push([kintaiInfo.getUserName(), kintaiInfo.getBodyText()]);
+      });
+      message += `${MessageGenerator.createTable(tableData)}`;
+    }
+
+    message += '```';
     return message;
   }
 
