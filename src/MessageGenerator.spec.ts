@@ -50,15 +50,30 @@ describe('MessageGenerator', () => {
         new KintaiInfo('2018/09/11', KintaiType.FT, 'araki', '【FT申請】2018/09/11 私用のため'),
 
         // その他
-        new KintaiInfo('2018/09/11', KintaiType.その他, 'b', '【A休申請取り消し】2018/09/11 私用のため'),
-        new KintaiInfo('2018/09/11', KintaiType.その他, 'hoge', '【A休申請取り消し】2018/09/11 私用のため'),
+        new KintaiInfo(
+          '2018/09/11',
+          KintaiType.その他,
+          'b',
+          '【A休申請取り消し】2018/09/11 私用のため'
+        ),
+        new KintaiInfo(
+          '2018/09/11',
+          KintaiType.その他,
+          'hoge',
+          '【A休申請取り消し】2018/09/11 私用のため'
+        ),
         new KintaiInfo(
           '2018/09/11',
           KintaiType.その他,
           'hogehogefuga',
           '【A休申請取り消し】2018/09/11 私用のため'
         ),
-        new KintaiInfo('2018/09/11', KintaiType.その他, 'araki', '【A休申請取り消し】2018/09/11 私用のため'),
+        new KintaiInfo(
+          '2018/09/11',
+          KintaiType.その他,
+          'araki',
+          '【A休申請取り消し】2018/09/11 私用のため'
+        )
       ];
       expect(MessageGenerator.generate('2018/09/11', kintaiInfo)).toBe(
         `2018/09/11 の勤怠です。
