@@ -13,7 +13,7 @@ export class MessageGenerator {
       A休_Array.forEach(kintaiInfo => {
         tableData.push([kintaiInfo.getUserName(), kintaiInfo.getBodyText()]);
       });
-      message += `${MessageGenerator.createTable(tableData)}\n`;
+      message += `${MessageGenerator.createTable(tableData)}\n\n`;
     }
 
     let AM休_Array = kintaiInfoArray.filter(kintaiInfo => {
@@ -25,7 +25,7 @@ export class MessageGenerator {
       AM休_Array.forEach(kintaiInfo => {
         tableData.push([kintaiInfo.getUserName(), kintaiInfo.getBodyText()]);
       });
-      message += `${MessageGenerator.createTable(tableData)}\n`;
+      message += `${MessageGenerator.createTable(tableData)}\n\n`;
     }
 
     let PM休_Array = kintaiInfoArray.filter(kintaiInfo => {
@@ -37,7 +37,7 @@ export class MessageGenerator {
       PM休_Array.forEach(kintaiInfo => {
         tableData.push([kintaiInfo.getUserName(), kintaiInfo.getBodyText()]);
       });
-      message += `${MessageGenerator.createTable(tableData)}\n`;
+      message += `${MessageGenerator.createTable(tableData)}\n\n`;
     }
 
     let FT_Array = kintaiInfoArray.filter(kintaiInfo => {
@@ -56,7 +56,7 @@ export class MessageGenerator {
       return kintaiInfo.getType() == KintaiType.その他;
     });
     if (その他_Array.length > 0) {
-      message += '\n[その他]\n';
+      message += '\n\n[その他]\n';
       let tableData = new Array<Array<string>>();
       その他_Array.forEach(kintaiInfo => {
         tableData.push([kintaiInfo.getUserName(), kintaiInfo.getBodyText()]);
