@@ -8,7 +8,7 @@ import { SlackChannel } from './SlackChannel';
 declare var global: any;
 
 global.doPost = (event: PostEvent): void => {
-  var text = event.parameter['text'];
+  var text = event.parameter['text'].split(/\r\n|\r|\n/)[0]; // take first line
   var channel = SlackChannel.convert(event.parameter['channel_name']);
   if (text == 'Reminder: 今日の勤怠は？') {
     sendTodaysKintai(channel);
