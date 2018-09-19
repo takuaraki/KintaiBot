@@ -9,17 +9,25 @@ declare var global: any;
 
 global.doPost = (event: PostEvent): void => {
   var text = event.parameter['text'];
+  var channel = SlackChannel.convert(event.parameter['channel_name']);
   if (text == 'Reminder: 今日の勤怠は？') {
-    sendTodaysKintai();
+    sendTodaysKintai(channel);
   } else {
     var userName = event.parameter['user_name'];
-    saveKintai(userName, text);
+    saveKintai(channel, userName, text);
   }
 };
 
-function saveKintai(userName: string, text: string) {
+/**
+ * 勤怠情報を記録する
+ *
+ * @param channel  Slackのチャンネル
+ * @param userName ユーザー名
+ * @param text     本文
+ */
+function saveKintai(channel: SlackChannel, userName: string, text: string) {
   var now = new Date();
-  var kintaiService = new KintaiService(SlackChannel.勤怠_開発部);
+  var kintaiService = new KintaiService(channel);
   var targetDateExtractor = new TargetDateExtractor(now);
   var targetDate = targetDateExtractor.extract(text);
   let kintaiType = KintaiTypeExtractor.extract(text);
@@ -30,13 +38,18 @@ function saveKintai(userName: string, text: string) {
   );
 }
 
-function sendTodaysKintai() {
+/**
+ * 今日の勤怠を送信する
+ *
+ * @param channel Slackのチャンネル名
+ */
+function sendTodaysKintai(channel: SlackChannel) {
   var now = new Date();
-  var kintaiService = new KintaiService(SlackChannel.勤怠_開発部);
+  var kintaiService = new KintaiService(channel);
   var kintaiInfoArray = kintaiService.getKintai(now);
   if (kintaiInfoArray.length > 0) {
     var today = `${now.getFullYear()}/${now.getMonth() + 1}/${now.getDate()}`;
-    sendToSlack(`#${SlackChannel.勤怠_開発部}`, MessageGenerator.generate(today, kintaiInfoArray));
+    sendToSlack(`#${channel}`, MessageGenerator.generate(today, kintaiInfoArray));
   }
 }
 
