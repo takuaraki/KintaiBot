@@ -1,20 +1,19 @@
 import Spreadsheet = GoogleAppsScript.Spreadsheet.Spreadsheet;
 import Sheet = GoogleAppsScript.Spreadsheet.Sheet;
 import { KintaiInfo, KintaiType } from './KintaiInfo';
+import { SlackChannel } from './SlackChannel';
 
 /**
  * 勤怠を管理するクラス
  */
 export class KintaiService {
-  private now: Date;
   private spreadSheet: Spreadsheet;
   private sheet: Sheet;
 
-  constructor(now: Date) {
-    this.now = now;
+  constructor(channel: SlackChannel) {
     var folderId = PropertiesService.getScriptProperties().getProperty('KINTAI_FOLDER_ID');
     var kintaiFolder = DriveApp.getFolderById(folderId);
-    var kintaiFile = kintaiFolder.getFilesByName('kintai_' + now.getFullYear()).next();
+    var kintaiFile = kintaiFolder.getFilesByName(channel).next();
     this.spreadSheet = SpreadsheetApp.open(kintaiFile);
     this.sheet = this.spreadSheet.getSheets()[0];
   }
@@ -42,10 +41,13 @@ export class KintaiService {
   }
 
   /**
-   * 今日の勤怠情報を取得する
+   * 勤怠情報を取得する
+   *
+   * @param targetDate 取得対象日
    */
-  getTodaysKintai(): Array<KintaiInfo> {
-    var targetDate = `${this.now.getFullYear()}/${this.now.getMonth() + 1}/${this.now.getDate()}`;
+  getKintai(targetDate: Date): Array<KintaiInfo> {
+    var targetDateText = `${targetDate.getFullYear()}/${targetDate.getMonth() +
+      1}/${targetDate.getDate()}`;
     var kintaiInfoArray = new Array<KintaiInfo>();
 
     var maxRowCount = 10000;
@@ -57,14 +59,14 @@ export class KintaiService {
       }
       var date = cellData as Date;
       if (
-        date.getFullYear() == this.now.getFullYear() &&
-        date.getMonth() == this.now.getMonth() &&
-        date.getDate() == this.now.getDate()
+        date.getFullYear() == targetDate.getFullYear() &&
+        date.getMonth() == targetDate.getMonth() &&
+        date.getDate() == targetDate.getDate()
       ) {
         var type = KintaiType.convert(kintaiValues[row][1] as string);
         var name = kintaiValues[row][2] as string;
         var text = kintaiValues[row][3] as string;
-        kintaiInfoArray.push(new KintaiInfo(targetDate, type, name, text));
+        kintaiInfoArray.push(new KintaiInfo(targetDateText, type, name, text));
       }
     }
     return kintaiInfoArray;

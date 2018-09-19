@@ -19,7 +19,7 @@ global.doPost = (event: PostEvent): void => {
 
 function saveKintai(userName: string, text: string) {
   var now = new Date();
-  var kintaiService = new KintaiService(now);
+  var kintaiService = new KintaiService(SlackChannel.勤怠_開発部);
   var targetDateExtractor = new TargetDateExtractor(now);
   var targetDate = targetDateExtractor.extract(text);
   let kintaiType = KintaiTypeExtractor.extract(text);
@@ -32,8 +32,8 @@ function saveKintai(userName: string, text: string) {
 
 function sendTodaysKintai() {
   var now = new Date();
-  var kintaiService = new KintaiService(now);
-  var kintaiInfoArray = kintaiService.getTodaysKintai();
+  var kintaiService = new KintaiService(SlackChannel.勤怠_開発部);
+  var kintaiInfoArray = kintaiService.getKintai(now);
   if (kintaiInfoArray.length > 0) {
     var today = `${now.getFullYear()}/${now.getMonth() + 1}/${now.getDate()}`;
     sendToSlack(`#${SlackChannel.勤怠_開発部}`, MessageGenerator.generate(today, kintaiInfoArray));
