@@ -3,6 +3,7 @@ import { KintaiInfo, KintaiType } from './KintaiInfo';
 import { TargetDateExtractor } from './TargetDateExtractor';
 import { KintaiTypeExtractor } from './KintaiTypeExtractor';
 import { MessageGenerator } from './MessageGenerator';
+import { SlackChannel } from './SlackChannel';
 
 declare var global: any;
 
@@ -24,7 +25,7 @@ function saveKintai(userName: string, text: string) {
   let kintaiType = KintaiTypeExtractor.extract(text);
   kintaiService.register(new KintaiInfo(targetDate, kintaiType, userName, text));
   sendToSlack(
-    '#bot-test',
+    `#${SlackChannel.botTest}`,
     `I saved Kintai. \`date: ${targetDate}, type: ${kintaiType}, name: ${userName} , text: ${text}\``
   );
 }
@@ -35,7 +36,7 @@ function sendTodaysKintai() {
   var kintaiInfoArray = kintaiService.getTodaysKintai();
   if (kintaiInfoArray.length > 0) {
     var today = `${now.getFullYear()}/${now.getMonth() + 1}/${now.getDate()}`;
-    sendToSlack('#勤怠_開発部', MessageGenerator.generate(today, kintaiInfoArray));
+    sendToSlack(`#${SlackChannel.勤怠_開発部}`, MessageGenerator.generate(today, kintaiInfoArray));
   }
 }
 
