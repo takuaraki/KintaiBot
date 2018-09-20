@@ -38,6 +38,7 @@ namespace KintaiType {
     switch (text) {
       case 'A休':
       case 'A休申請':
+      case '休み':
         return KintaiType.A休;
       case 'AM休':
       case 'AM休申請':
