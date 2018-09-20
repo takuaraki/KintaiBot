@@ -4,7 +4,7 @@ import { KintaiType } from './KintaiInfo';
  * Slackの本文から勤怠種別を抽出するクラス
  */
 export class KintaiTypeExtractor {
-  private static regexpType = /【(.+)】/;
+  private static regexpType = /【(.+?)】/;
 
   /**
    * 勤怠種別を抽出する

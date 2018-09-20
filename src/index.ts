@@ -4,6 +4,7 @@ import { TargetDateExtractor } from './TargetDateExtractor';
 import { KintaiTypeExtractor } from './KintaiTypeExtractor';
 import { MessageGenerator } from './MessageGenerator';
 import { SlackChannel } from './SlackChannel';
+import { NameExtractor } from './NameExtractor';
 
 declare var global: any;
 
@@ -30,11 +31,13 @@ function saveKintai(channel: SlackChannel, userName: string, text: string) {
   var kintaiService = new KintaiService(channel);
   var targetDateExtractor = new TargetDateExtractor(now);
   var targetDate = targetDateExtractor.extract(text);
-  let kintaiType = KintaiTypeExtractor.extract(text);
-  kintaiService.register(new KintaiInfo(targetDate, kintaiType, userName, text));
+  var kintaiType = KintaiTypeExtractor.extract(text);
+  var extractedName = NameExtractor.extract(text);
+  var name = extractedName != null ? extractedName : userName;
+  kintaiService.register(new KintaiInfo(targetDate, kintaiType, name, text));
   sendToSlack(
     `#${SlackChannel.botTest}`,
-    `I saved Kintai. \`date: ${targetDate}, type: ${kintaiType}, name: ${userName} , text: ${text}\``
+    `I saved Kintai. \`date: ${targetDate}, type: ${kintaiType}, name: ${name} , text: ${text}\``
   );
 }
 
