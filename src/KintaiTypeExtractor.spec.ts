@@ -3,14 +3,14 @@ import { KintaiTypeExtractor } from './KintaiTypeExtractor';
 
 describe('TargetDateExtractor', () => {
   describe('extract', () => {
-    it('A休 case1', () => {
-      expect(KintaiTypeExtractor.extract('【A休】【荒木】09/05 私用のため')).toBe(KintaiType.A休);
+    it('休み case1', () => {
+      expect(KintaiTypeExtractor.extract('【A休】【荒木】09/05 私用のため')).toBe(KintaiType.休み);
     });
-    it('A休 case2', () => {
-      expect(KintaiTypeExtractor.extract('【A休申請】09/05 私用のため')).toBe(KintaiType.A休);
+    it('休み case2', () => {
+      expect(KintaiTypeExtractor.extract('【A休申請】09/05 私用のため')).toBe(KintaiType.休み);
     });
-    it('A休 case2', () => {
-      expect(KintaiTypeExtractor.extract('【休み】09/05 私用のため')).toBe(KintaiType.A休);
+    it('休み case2', () => {
+      expect(KintaiTypeExtractor.extract('【休み】09/05 私用のため')).toBe(KintaiType.休み);
     });
     it('AM休 case1', () => {
       expect(KintaiTypeExtractor.extract('【AM休】09/05 私用のため')).toBe(KintaiType.AM休);

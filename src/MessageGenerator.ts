@@ -5,10 +5,10 @@ export class MessageGenerator {
     var message = `${today} の勤怠です。\n\`\`\`\n`;
 
     let A休_Array = kintaiInfoArray.filter(kintaiInfo => {
-      return kintaiInfo.getType() == KintaiType.A休;
+      return kintaiInfo.getType() == KintaiType.休み;
     });
     if (A休_Array.length > 0) {
-      message += '[A休]\n';
+      message += '[休み]\n';
       let tableData = new Array<Array<string>>();
       A休_Array.forEach(kintaiInfo => {
         tableData.push([kintaiInfo.getUserName(), kintaiInfo.getBodyText()]);

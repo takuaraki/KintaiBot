@@ -26,7 +26,7 @@ export class KintaiInfo {
 export { KintaiType };
 
 enum KintaiType {
-  A休 = 'A休',
+  休み = '休み',
   AM休 = 'AM休',
   PM休 = 'PM休',
   FT = 'FT',
@@ -39,7 +39,7 @@ namespace KintaiType {
       case 'A休':
       case 'A休申請':
       case '休み':
-        return KintaiType.A休;
+        return KintaiType.休み;
       case 'AM休':
       case 'AM休申請':
       case '午前休':
@@ -59,7 +59,7 @@ namespace KintaiType {
 
   export function getIndex(type: KintaiType): number {
     switch (type) {
-      case KintaiType.A休:
+      case KintaiType.休み:
         return 0;
       case KintaiType.AM休:
         return 1;

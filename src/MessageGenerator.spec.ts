@@ -3,18 +3,18 @@ import { KintaiInfo, KintaiType } from './KintaiInfo';
 
 describe('MessageGenerator', () => {
   describe('generate', () => {
-    it('A休 case1', () => {
+    it('regular case', () => {
       let kintaiInfo = [
-        // A休
-        new KintaiInfo('2018/09/11', KintaiType.A休, 'b', '【A休申請】2018/09/11 私用のため'),
-        new KintaiInfo('2018/09/11', KintaiType.A休, 'hoge', '【A休申請】2018/09/11 私用のため'),
+        // 休み
+        new KintaiInfo('2018/09/11', KintaiType.休み, 'b', '【A休申請】2018/09/11 私用のため'),
+        new KintaiInfo('2018/09/11', KintaiType.休み, 'hoge', '【A休申請】2018/09/11 私用のため'),
         new KintaiInfo(
           '2018/09/11',
-          KintaiType.A休,
+          KintaiType.休み,
           'hogehogefuga',
           '【A休申請】2018/09/11 私用のため'
         ),
-        new KintaiInfo('2018/09/11', KintaiType.A休, 'araki', '【A休申請】2018/09/11 私用のため'),
+        new KintaiInfo('2018/09/11', KintaiType.休み, 'araki', '【A休申請】2018/09/11 私用のため'),
 
         // AM
         new KintaiInfo('2018/09/11', KintaiType.AM休, 'b', '【AM休申請】2018/09/11 私用のため'),
@@ -82,7 +82,7 @@ describe('MessageGenerator', () => {
 
 let expectMessage = `2018/09/11 の勤怠です。
 \`\`\`
-[A休]
+[休み]
 b             【A休申請】2018/09/11 私用のため
 hoge          【A休申請】2018/09/11 私用のため
 hogehogefuga  【A休申請】2018/09/11 私用のため

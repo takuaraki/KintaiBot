@@ -1,5 +1,5 @@
 import { KintaiService } from './KintaiService';
-import { KintaiInfo, KintaiType } from './KintaiInfo';
+import { KintaiInfo } from './KintaiInfo';
 import { TargetDateExtractor } from './TargetDateExtractor';
 import { KintaiTypeExtractor } from './KintaiTypeExtractor';
 import { MessageGenerator } from './MessageGenerator';
