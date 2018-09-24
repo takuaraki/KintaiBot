@@ -30,9 +30,11 @@ jobs:
           command: |
             if [ ${CIRCLE_BRANCH} = "master" ]; then
               echo $CLASPRC_JSON_PRODUCTION > ~/.clasprc.json
+              echo $CLASP_JSON_PRODUCTION > .clasp.json
               npx @google/clasp push
             elif [ ${CIRCLE_BRANCH} = "develop" ]; then
               echo $CLASPRC_JSON_TEST > ~/.clasprc.json
+              echo $CLASP_JSON_TEST > .clasp.json
               npx @google/clasp push
             else
               echo "${CIRCLE_BRANCH} isn't deploy branch."
