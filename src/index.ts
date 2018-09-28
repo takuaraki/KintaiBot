@@ -5,17 +5,21 @@ import { KintaiTypeExtractor } from './KintaiTypeExtractor';
 import { MessageGenerator } from './MessageGenerator';
 import { SlackChannel } from './SlackChannel';
 import { NameExtractor } from './NameExtractor';
+import { InputTextExtractor } from './InputTextExtractor';
 
 declare var global: any;
 
 global.doPost = (event: PostEvent): void => {
-  var text = event.parameter['text'].split(/\r\n|\r|\n/)[0]; // take first line
+  var text = event.parameter['text'];
   var channel = SlackChannel.convert(event.parameter['channel_name']);
   if (text == 'Reminder: 今日の勤怠は？') {
     sendTodaysKintai(channel);
   } else {
     var userName = event.parameter['user_name'];
-    saveKintai(channel, userName, text);
+    var inputTexts = InputTextExtractor.extract(text);
+    inputTexts.forEach(input => {
+      saveKintai(channel, userName, input);
+    });
   }
 };
 
