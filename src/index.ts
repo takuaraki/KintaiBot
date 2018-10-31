@@ -12,9 +12,12 @@ declare var global: any;
 global.doPost = (event: PostEvent): void => {
   var text = event.parameter['text'];
   var channel = SlackChannel.convert(event.parameter['channel_name']);
+  sendToSlack(channel, `text: ${text}, channel: ${channel}`);
   if (text == 'Reminder: 今日の勤怠は？') {
+    sendToSlack(channel, "start sendTodaysKintai");
     sendTodaysKintai(channel);
   } else {
+    sendToSlack(channel, "start saveKintai");
     var userName = event.parameter['user_name'];
     var inputTexts = InputTextExtractor.extract(text);
     inputTexts.forEach(input => {
