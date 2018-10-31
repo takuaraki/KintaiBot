@@ -3,10 +3,7 @@ jest.unmock('./TargetDateExtractor');
 
 describe('TargetDateExtractor', () => {
   describe('extract', () => {
-    let now = new Date();
-    now.setFullYear(2018); // 2018年
-    now.setMonth(9 - 1); // 9月
-    now.setDate(4); // 4日
+    let now = new Date(2018, 9 - 1, 4);
     let tester = new TargetDateExtractor(now);
 
     it('slash divide case1. M/dd', () => {
@@ -63,14 +60,13 @@ describe('TargetDateExtractor', () => {
   });
 
   describe('extract beyond year', () => {
-    let now = new Date();
-    now.setFullYear(2018); // 2018年
-    now.setMonth(12 - 1); // 12月
-    now.setDate(20); // 20日
+    let now = new Date(2018, 12 - 1, 20);
     let tester = new TargetDateExtractor(now);
 
     it('kintai for next year', () => {
       // now = 2018/12/20. In this case, 1/8 may mean 2019/1/8.
+      console.log(tester.extract('【A休申請】1/8 私用のため'));
+      console.log(`${now.getFullYear() + 1}/1/8`);
       expect(tester.extract('【A休申請】1/8 私用のため')).toBe(`${now.getFullYear() + 1}/1/8`);
     });
   });
