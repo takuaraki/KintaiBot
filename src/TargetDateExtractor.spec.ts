@@ -65,8 +65,6 @@ describe('TargetDateExtractor', () => {
 
     it('kintai for next year', () => {
       // now = 2018/12/20. In this case, 1/8 may mean 2019/1/8.
-      console.log(tester.extract('【A休申請】1/8 私用のため'));
-      console.log(`${now.getFullYear() + 1}/1/8`);
       expect(tester.extract('【A休申請】1/8 私用のため')).toBe(`${now.getFullYear() + 1}/1/8`);
     });
   });
