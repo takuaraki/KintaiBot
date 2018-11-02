@@ -20,7 +20,7 @@ export class MessageGenerator {
       return kintaiInfo.getType() == KintaiType.AM休;
     });
     if (AM休_Array.length > 0) {
-      message += '[AM休]\n';
+      message += '[午前休]\n';
       let tableData = new Array<Array<string>>();
       AM休_Array.forEach(kintaiInfo => {
         tableData.push([kintaiInfo.getUserName(), kintaiInfo.getBodyText()]);
@@ -32,7 +32,7 @@ export class MessageGenerator {
       return kintaiInfo.getType() == KintaiType.PM休;
     });
     if (PM休_Array.length > 0) {
-      message += '[PM休]\n';
+      message += '[午後休]\n';
       let tableData = new Array<Array<string>>();
       PM休_Array.forEach(kintaiInfo => {
         tableData.push([kintaiInfo.getUserName(), kintaiInfo.getBodyText()]);
