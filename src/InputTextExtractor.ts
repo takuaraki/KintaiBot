@@ -8,6 +8,6 @@ export class InputTextExtractor {
    * @param text Slackの本文
    */
   static extract(text: string): RegExpMatchArray {
-    return text.match(new RegExp("【.*", "g"));
+    return text.match(new RegExp('【.*', 'g'));
   }
 }
