@@ -11,7 +11,10 @@ export class MessageGenerator {
       message += '【休み】\n';
       let tableData = new Array<Array<string>>();
       A休_Array.forEach(kintaiInfo => {
-        tableData.push([kintaiInfo.getUserName(), kintaiInfo.getBodyText()]);
+        tableData.push([
+          kintaiInfo.getUserName(),
+          MessageGenerator.removeLenticularBrackets(kintaiInfo.getBodyText())
+        ]);
       });
       message += `${MessageGenerator.createTable(tableData)}\n\n`;
     }
@@ -23,7 +26,10 @@ export class MessageGenerator {
       message += '【午前休】\n';
       let tableData = new Array<Array<string>>();
       AM休_Array.forEach(kintaiInfo => {
-        tableData.push([kintaiInfo.getUserName(), kintaiInfo.getBodyText()]);
+        tableData.push([
+          kintaiInfo.getUserName(),
+          MessageGenerator.removeLenticularBrackets(kintaiInfo.getBodyText())
+        ]);
       });
       message += `${MessageGenerator.createTable(tableData)}\n\n`;
     }
@@ -35,7 +41,10 @@ export class MessageGenerator {
       message += '【午後休】\n';
       let tableData = new Array<Array<string>>();
       PM休_Array.forEach(kintaiInfo => {
-        tableData.push([kintaiInfo.getUserName(), kintaiInfo.getBodyText()]);
+        tableData.push([
+          kintaiInfo.getUserName(),
+          MessageGenerator.removeLenticularBrackets(kintaiInfo.getBodyText())
+        ]);
       });
       message += `${MessageGenerator.createTable(tableData)}\n\n`;
     }
@@ -47,7 +56,10 @@ export class MessageGenerator {
       message += '【FT】\n';
       let tableData = new Array<Array<string>>();
       FT_Array.forEach(kintaiInfo => {
-        tableData.push([kintaiInfo.getUserName(), kintaiInfo.getBodyText()]);
+        tableData.push([
+          kintaiInfo.getUserName(),
+          MessageGenerator.removeLenticularBrackets(kintaiInfo.getBodyText())
+        ]);
       });
       message += `${MessageGenerator.createTable(tableData)}`;
     }
@@ -66,6 +78,14 @@ export class MessageGenerator {
 
     message += '```';
     return message;
+  }
+
+  /**
+   * remove linticular brackets (in Japanese: 隅付き括弧).
+   * @param text
+   */
+  static removeLenticularBrackets(text: string): string {
+    return text.replace(/【.+?】/g, '');
   }
 
   static createTable(rows_: Array<Array<string>>): string {
