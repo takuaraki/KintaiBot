@@ -10,19 +10,19 @@ describe('MessageGenerator', () => {
           '2018/09/11',
           KintaiType.休み,
           'b',
-          '【A休申請】2018/09/11（火） 私用のため【b】'
+          '【A休申請】2018年09月11日（火） 私用のため【b】'
         ),
         new KintaiInfo(
           '2018/09/11',
           KintaiType.休み,
           'hoge',
-          '【A休申請】2018/09/11(火) 私用のため【hoge】'
+          '【A休申請】2018-09-11(火) 私用のため【hoge】'
         ),
         new KintaiInfo(
           '2018/09/11',
           KintaiType.休み,
           'hogehogefuga',
-          '【A休申請】2018/09/11（火） 私用のため【hogehogefuga】'
+          '【A休申請】09/11（火） 私用のため【hogehogefuga】'
         ),
         new KintaiInfo(
           '2018/09/11',
