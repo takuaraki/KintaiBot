@@ -6,24 +6,29 @@ describe('MessageGenerator', () => {
     it('regular case', () => {
       let kintaiInfo = [
         // 休み
-        new KintaiInfo('2018/09/11', KintaiType.休み, 'b', '【A休申請】2018/09/11 私用のため【b】'),
+        new KintaiInfo(
+          '2018/09/11',
+          KintaiType.休み,
+          'b',
+          '【A休申請】2018/09/11（火） 私用のため【b】'
+        ),
         new KintaiInfo(
           '2018/09/11',
           KintaiType.休み,
           'hoge',
-          '【A休申請】2018/09/11 私用のため【hoge】'
+          '【A休申請】2018/09/11(火) 私用のため【hoge】'
         ),
         new KintaiInfo(
           '2018/09/11',
           KintaiType.休み,
           'hogehogefuga',
-          '【A休申請】2018/09/11 私用のため【hogehogefuga】'
+          '【A休申請】2018/09/11（火） 私用のため【hogehogefuga】'
         ),
         new KintaiInfo(
           '2018/09/11',
           KintaiType.休み,
           'araki',
-          '【A休申請】2018/09/11 私用のため【araki】'
+          '【A休申請】2018/09/11(火) 私用のため【araki】'
         ),
 
         // AM
@@ -93,32 +98,32 @@ describe('MessageGenerator', () => {
 let expectMessage = `2018/09/11 の勤怠です。
 \`\`\`
 【休み】
-b             2018/09/11 私用のため
-hoge          2018/09/11 私用のため
-hogehogefuga  2018/09/11 私用のため
-araki         2018/09/11 私用のため
+b             私用のため
+hoge          私用のため
+hogehogefuga  私用のため
+araki         私用のため
 
 【午前休】
-b             2018/09/11 私用のため
-hoge          2018/09/11 私用のため
-hogehogefuga  2018/09/11 私用のため
-araki         2018/09/11 私用のため
+b             私用のため
+hoge          私用のため
+hogehogefuga  私用のため
+araki         私用のため
 
 【午後休】
-b             2018/09/11 私用のため
-hoge          2018/09/11 私用のため
-hogehogefuga  2018/09/11 私用のため
-araki         2018/09/11 私用のため
+b             私用のため
+hoge          私用のため
+hogehogefuga  私用のため
+araki         私用のため
 
 【FT】
-b             2018/09/11 私用のため
-hoge          2018/09/11 私用のため
-hogehogefuga  2018/09/11 私用のため
-araki         2018/09/11 私用のため
+b             私用のため
+hoge          私用のため
+hogehogefuga  私用のため
+araki         私用のため
 
 【その他】
-b             【A休申請取り消し】2018/09/11 私用のため
-hoge          【A休申請取り消し】2018/09/11 私用のため
-hogehogefuga  【A休申請取り消し】2018/09/11 私用のため
-araki         【A休申請取り消し】2018/09/11 私用のため
+b             【A休申請取り消し】私用のため
+hoge          【A休申請取り消し】私用のため
+hogehogefuga  【A休申請取り消し】私用のため
+araki         【A休申請取り消し】私用のため
 \`\`\``;

@@ -13,7 +13,10 @@ export class MessageGenerator {
       A休_Array.forEach(kintaiInfo => {
         tableData.push([
           kintaiInfo.getUserName(),
-          MessageGenerator.removeLenticularBrackets(kintaiInfo.getBodyText())
+          MessageGenerator.removeUnnecessaryText(
+            kintaiInfo.getBodyText(),
+            kintaiInfo.getTargetDate()
+          )
         ]);
       });
       message += `${MessageGenerator.createTable(tableData)}\n\n`;
@@ -28,7 +31,10 @@ export class MessageGenerator {
       AM休_Array.forEach(kintaiInfo => {
         tableData.push([
           kintaiInfo.getUserName(),
-          MessageGenerator.removeLenticularBrackets(kintaiInfo.getBodyText())
+          MessageGenerator.removeUnnecessaryText(
+            kintaiInfo.getBodyText(),
+            kintaiInfo.getTargetDate()
+          )
         ]);
       });
       message += `${MessageGenerator.createTable(tableData)}\n\n`;
@@ -43,7 +49,10 @@ export class MessageGenerator {
       PM休_Array.forEach(kintaiInfo => {
         tableData.push([
           kintaiInfo.getUserName(),
-          MessageGenerator.removeLenticularBrackets(kintaiInfo.getBodyText())
+          MessageGenerator.removeUnnecessaryText(
+            kintaiInfo.getBodyText(),
+            kintaiInfo.getTargetDate()
+          )
         ]);
       });
       message += `${MessageGenerator.createTable(tableData)}\n\n`;
@@ -58,7 +67,10 @@ export class MessageGenerator {
       FT_Array.forEach(kintaiInfo => {
         tableData.push([
           kintaiInfo.getUserName(),
-          MessageGenerator.removeLenticularBrackets(kintaiInfo.getBodyText())
+          MessageGenerator.removeUnnecessaryText(
+            kintaiInfo.getBodyText(),
+            kintaiInfo.getTargetDate()
+          )
         ]);
       });
       message += `${MessageGenerator.createTable(tableData)}`;
@@ -71,7 +83,9 @@ export class MessageGenerator {
       message += '\n\n【その他】\n';
       let tableData = new Array<Array<string>>();
       その他_Array.forEach(kintaiInfo => {
-        tableData.push([kintaiInfo.getUserName(), kintaiInfo.getBodyText()]);
+        var noDateText = this.removeDate(kintaiInfo.getBodyText(), kintaiInfo.getTargetDate());
+        var noDayOfTheWeekText = this.removeDayOfTheWeek(noDateText);
+        tableData.push([kintaiInfo.getUserName(), noDayOfTheWeekText.replace(/ /g, '')]);
       });
       message += `${MessageGenerator.createTable(tableData)}\n`;
     }
@@ -80,12 +94,27 @@ export class MessageGenerator {
     return message;
   }
 
+  static removeUnnecessaryText(text: string, date: string): string {
+    var noLenticularText = this.removeLenticularBrackets(text);
+    var noDateText = this.removeDate(noLenticularText, date);
+    var noDayOfTheWeekText = this.removeDayOfTheWeek(noDateText);
+    return noDayOfTheWeekText.trim();
+  }
+
   /**
    * remove linticular brackets (in Japanese: 隅付き括弧).
    * @param text
    */
   static removeLenticularBrackets(text: string): string {
     return text.replace(/【.+?】/g, '');
+  }
+
+  static removeDate(text: string, date: string): string {
+    return text.replace(date, '');
+  }
+
+  static removeDayOfTheWeek(text: string): string {
+    return text.replace(/(?:\(|（)(?:月|火|水|木|金)(?:\)|）)/g, '');
   }
 
   static createTable(rows_: Array<Array<string>>): string {
