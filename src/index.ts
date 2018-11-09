@@ -6,6 +6,7 @@ import { MessageGenerator } from './MessageGenerator';
 import { SlackChannel } from './SlackChannel';
 import { NameExtractor } from './NameExtractor';
 import { InputTextExtractor } from './InputTextExtractor';
+import { SlackService } from './SlackService';
 
 declare var global: any;
 
@@ -16,9 +17,10 @@ global.doPost = (event: PostEvent): void => {
     sendTodaysKintai(channel);
   } else {
     var userName = event.parameter['user_name'];
+    var userId = event.parameter['user_id'];
     var inputTexts = InputTextExtractor.extract(text);
     inputTexts.forEach(input => {
-      saveKintai(channel, userName, input);
+      saveKintai(channel, userName, userId, input);
     });
   }
 };
@@ -30,7 +32,7 @@ global.doPost = (event: PostEvent): void => {
  * @param userName ユーザー名
  * @param text     本文
  */
-function saveKintai(channel: SlackChannel, userName: string, text: string) {
+function saveKintai(channel: SlackChannel, userName: string, userId: string, text: string) {
   var now = new Date();
   var kintaiService = new KintaiService(channel);
   var targetDateExtractor = new TargetDateExtractor(now);
@@ -39,10 +41,13 @@ function saveKintai(channel: SlackChannel, userName: string, text: string) {
   var extractedName = NameExtractor.extract(text);
   var name = extractedName != null ? extractedName : userName;
   kintaiService.register(new KintaiInfo(targetDate, kintaiType, name, text));
+
   sendToSlack(
     `#${SlackChannel.botTest}`,
     `I saved Kintai. \`date: ${targetDate}, type: ${kintaiType}, name: ${name} , text: ${text}\``
   );
+  var slackService = new SlackService(channel);
+  slackService.postEphemeral(`勤怠を記録しました。`, userId);
 }
 
 /**
