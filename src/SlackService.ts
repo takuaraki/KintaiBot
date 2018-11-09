@@ -16,7 +16,7 @@ export class SlackService {
    */
   postMessage(channel: SlackChannel, text: string) {
     var baseUrl = 'https://slack.com/api/chat.postMessage';
-    var url = `${baseUrl}?token=${this.token}&channel=${channel}&text=${text}`;
+    var url = `${baseUrl}?token=${this.token}&channel=${channel}&text=${encodeURIComponent(text)}`;
     const options: URLFetchRequestOptions = {
       method: 'post'
     };
@@ -28,7 +28,9 @@ export class SlackService {
    */
   postEphemeral(channel: SlackChannel, text: string, user: string) {
     var baseUrl = 'https://slack.com/api/chat.postEphemeral';
-    var url = `${baseUrl}?token=${this.token}&channel=${channel}&text=${text}&user=${user}`;
+    var url = `${baseUrl}?token=${this.token}&channel=${channel}&text=${encodeURIComponent(
+      text
+    )}&user=${user}`;
     const options: URLFetchRequestOptions = {
       method: 'post'
     };

@@ -49,10 +49,8 @@ function saveKintai(channel: SlackChannel, userName: string, userId: string, tex
   );
   slackService.postEphemeral(
     channel,
-    encodeURIComponent(
-      `勤怠を記録しました。
-\`日付: ${targetDate}, 種別: ${kintaiType}, 名前: ${name}, 本文: ${text}\``
-    ),
+    `勤怠を記録しました。
+\`日付: ${targetDate}, 種別: ${kintaiType}, 名前: ${name}, 本文: ${text}\``,
     userId
   );
 }
