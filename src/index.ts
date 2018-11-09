@@ -6,6 +6,7 @@ import { MessageGenerator } from './MessageGenerator';
 import { SlackChannel } from './SlackChannel';
 import { NameExtractor } from './NameExtractor';
 import { InputTextExtractor } from './InputTextExtractor';
+import { SlackService } from './SlackService';
 
 declare var global: any;
 
@@ -16,9 +17,10 @@ global.doPost = (event: PostEvent): void => {
     sendTodaysKintai(channel);
   } else {
     var userName = event.parameter['user_name'];
+    var userId = event.parameter['user_id'];
     var inputTexts = InputTextExtractor.extract(text);
     inputTexts.forEach(input => {
-      saveKintai(channel, userName, input);
+      saveKintai(channel, userName, userId, input);
     });
   }
 };
@@ -30,7 +32,7 @@ global.doPost = (event: PostEvent): void => {
  * @param userName ユーザー名
  * @param text     本文
  */
-function saveKintai(channel: SlackChannel, userName: string, text: string) {
+function saveKintai(channel: SlackChannel, userName: string, userId: string, text: string) {
   var now = new Date();
   var kintaiService = new KintaiService(channel);
   var targetDateExtractor = new TargetDateExtractor(now);
@@ -39,9 +41,17 @@ function saveKintai(channel: SlackChannel, userName: string, text: string) {
   var extractedName = NameExtractor.extract(text);
   var name = extractedName != null ? extractedName : userName;
   kintaiService.register(new KintaiInfo(targetDate, kintaiType, name, text));
-  sendToSlack(
-    `#${SlackChannel.botTest}`,
+
+  var slackService = new SlackService();
+  slackService.postMessage(
+    SlackChannel.botTest,
     `I saved Kintai. \`date: ${targetDate}, type: ${kintaiType}, name: ${name} , text: ${text}\``
+  );
+  slackService.postEphemeral(
+    channel,
+    `勤怠を記録しました。
+\`日付: ${targetDate}, 種別: ${kintaiType}, 名前: ${name}, 本文: ${text}\``,
+    userId
   );
 }
 
@@ -56,7 +66,8 @@ function sendTodaysKintai(channel: SlackChannel) {
   var kintaiInfoArray = kintaiService.getKintai(now);
   if (kintaiInfoArray.length > 0) {
     var today = `${now.getFullYear()}/${now.getMonth() + 1}/${now.getDate()}`;
-    sendToSlack(`#${channel}`, MessageGenerator.generate(today, kintaiInfoArray));
+    var slackService = new SlackService();
+    slackService.postMessage(channel, MessageGenerator.generate(today, kintaiInfoArray));
   }
 }
 
@@ -72,5 +83,3 @@ class PostEvent {
     name: string;
   };
 }
-
-declare function sendToSlack(channelId: string, text: string);
