@@ -42,12 +42,13 @@ function saveKintai(channel: SlackChannel, userName: string, userId: string, tex
   var name = extractedName != null ? extractedName : userName;
   kintaiService.register(new KintaiInfo(targetDate, kintaiType, name, text));
 
-  sendToSlack(
-    `#${SlackChannel.botTest}`,
+  var slackService = new SlackService();
+  slackService.postMessage(
+    SlackChannel.botTest,
     `I saved Kintai. \`date: ${targetDate}, type: ${kintaiType}, name: ${name} , text: ${text}\``
   );
-  var slackService = new SlackService(channel);
   slackService.postEphemeral(
+    channel,
     encodeURIComponent(
       `勤怠を記録しました。
 \`日付: ${targetDate}, 種別: ${kintaiType}, 名前: ${name}, 本文: ${text}\``
@@ -67,7 +68,8 @@ function sendTodaysKintai(channel: SlackChannel) {
   var kintaiInfoArray = kintaiService.getKintai(now);
   if (kintaiInfoArray.length > 0) {
     var today = `${now.getFullYear()}/${now.getMonth() + 1}/${now.getDate()}`;
-    sendToSlack(`#${channel}`, MessageGenerator.generate(today, kintaiInfoArray));
+    var slackService = new SlackService();
+    slackService.postMessage(channel, MessageGenerator.generate(today, kintaiInfoArray));
   }
 }
 
@@ -83,5 +85,3 @@ class PostEvent {
     name: string;
   };
 }
-
-declare function sendToSlack(channelId: string, text: string);
