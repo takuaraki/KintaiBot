@@ -1,5 +1,5 @@
-import { KintaiType } from './KintaiInfo';
-import { KintaiTypeExtractor } from './KintaiTypeExtractor';
+import { KintaiType } from '../../main/kintai/KintaiInfo';
+import { KintaiTypeExtractor } from '../../main/extractors/KintaiTypeExtractor';
 
 describe('TargetDateExtractor', () => {
   describe('extract', () => {

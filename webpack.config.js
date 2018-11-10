@@ -3,7 +3,7 @@ const GasPlugin = require("gas-webpack-plugin");
 
 module.exports = {
   mode: 'development',
-  entry: './src/index.ts',
+  entry: './src/main/index.ts',
   devtool: false,
   output: {
     filename: 'bundle.js',

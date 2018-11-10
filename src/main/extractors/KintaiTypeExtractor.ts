@@ -1,4 +1,4 @@
-import { KintaiType } from './KintaiInfo';
+import { KintaiType } from '../kintai/KintaiInfo';
 
 /**
  * Slackの本文から勤怠種別を抽出するクラス
