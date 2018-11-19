@@ -1,5 +1,4 @@
-import { TargetDateExtractor } from './TargetDateExtractor';
-jest.unmock('./TargetDateExtractor');
+import { TargetDateExtractor } from '../../main/extractors/TargetDateExtractor';
 
 describe('TargetDateExtractor', () => {
   describe('extract', () => {

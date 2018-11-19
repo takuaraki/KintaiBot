@@ -1,5 +1,5 @@
-import { MessageGenerator } from './MessageGenerator';
-import { KintaiInfo, KintaiType } from './KintaiInfo';
+import { MessageGenerator } from '../../main/generators/MessageGenerator';
+import { KintaiInfo, KintaiType } from '../../main/kintai/KintaiInfo';
 
 describe('MessageGenerator', () => {
   describe('generate', () => {

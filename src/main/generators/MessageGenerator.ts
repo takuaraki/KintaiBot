@@ -1,4 +1,4 @@
-import { KintaiInfo, KintaiType } from './KintaiInfo';
+import { KintaiInfo, KintaiType } from '../kintai/KintaiInfo';
 
 export class MessageGenerator {
   static generate(today: string, kintaiInfoArray: Array<KintaiInfo>): string {

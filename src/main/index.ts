@@ -1,12 +1,12 @@
-import { KintaiService } from './KintaiService';
-import { KintaiInfo } from './KintaiInfo';
-import { TargetDateExtractor } from './TargetDateExtractor';
-import { KintaiTypeExtractor } from './KintaiTypeExtractor';
-import { MessageGenerator } from './MessageGenerator';
-import { SlackChannel } from './SlackChannel';
-import { NameExtractor } from './NameExtractor';
-import { InputTextExtractor } from './InputTextExtractor';
-import { SlackService } from './SlackService';
+import { KintaiService } from './kintai/KintaiService';
+import { KintaiInfo } from './kintai/KintaiInfo';
+import { TargetDateExtractor } from './extractors/TargetDateExtractor';
+import { KintaiTypeExtractor } from './extractors/KintaiTypeExtractor';
+import { MessageGenerator } from './generators/MessageGenerator';
+import { SlackChannel } from './slack/SlackChannel';
+import { NameExtractor } from './extractors/NameExtractor';
+import { InputTextExtractor } from './extractors/InputTextExtractor';
+import { SlackService } from './slack/SlackService';
 
 declare var global: any;
 

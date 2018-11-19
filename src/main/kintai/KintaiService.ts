@@ -1,7 +1,7 @@
 import Spreadsheet = GoogleAppsScript.Spreadsheet.Spreadsheet;
 import Sheet = GoogleAppsScript.Spreadsheet.Sheet;
 import { KintaiInfo, KintaiType } from './KintaiInfo';
-import { SlackChannel } from './SlackChannel';
+import { SlackChannel } from '../slack/SlackChannel';
 
 /**
  * 勤怠を管理するクラス

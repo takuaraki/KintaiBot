@@ -1,4 +1,4 @@
-import { InputTextExtractor } from './InputTextExtractor';
+import { InputTextExtractor } from '../../main/extractors/InputTextExtractor';
 
 describe('InputTextExtractor', () => {
   describe('extract', () => {

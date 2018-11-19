@@ -1,4 +1,4 @@
-import { NameExtractor } from './NameExtractor';
+import { NameExtractor } from '../../main/extractors/NameExtractor';
 
 describe('NameExtractor', () => {
   describe('extract', () => {
