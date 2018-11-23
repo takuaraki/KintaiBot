@@ -2,6 +2,7 @@ export class KintaiInfo {
   constructor(
     private targetDate: string,
     private type: KintaiType,
+    private userId: string,
     private userName: string,
     private bodyText: string
   ) {}
@@ -12,6 +13,10 @@ export class KintaiInfo {
 
   getType(): KintaiType {
     return this.type;
+  }
+
+  getUserId(): string {
+    return this.userId;
   }
 
   getUserName(): string {
