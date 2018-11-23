@@ -20,21 +20,35 @@ jobs:
           paths:
             - node_modules
       - run:
-          name: Run Lint
-          command: npm run lint
+          name: Run Build outgoing module
+          command: npm run build_outgoing
       - run:
-          name: Run Build
-          command: npm run build
-      - run:
-          name: Deploy to GAS
+          name: Deploy outgoing module
           command: |
             if [ ${CIRCLE_BRANCH} = "master" ]; then
               echo $CLASPRC_JSON_PRODUCTION > ~/.clasprc.json
-              echo $CLASP_JSON_PRODUCTION > .clasp.json
+              echo $CLASP_JSON_OUTGOING_PRODUCTION > .clasp.json
               npx @google/clasp push
             elif [ ${CIRCLE_BRANCH} = "develop" ]; then
               echo $CLASPRC_JSON_TEST > ~/.clasprc.json
-              echo $CLASP_JSON_TEST > .clasp.json
+              echo $CLASP_JSON_OUTGOING_TEST > .clasp.json
+              npx @google/clasp push
+            else
+              echo "${CIRCLE_BRANCH} isn't deploy branch."
+            fi
+      - run:
+          name: Run Build slashcommand module
+          command: npm run build_slashcommand
+      - run:
+          name: Deploy slashcommand module
+          command: |
+            if [ ${CIRCLE_BRANCH} = "master" ]; then
+              echo $CLASPRC_JSON_PRODUCTION > ~/.clasprc.json
+              echo $CLASP_JSON_SLASHCOMMAND_PRODUCTION > .clasp.json
+              npx @google/clasp push
+            elif [ ${CIRCLE_BRANCH} = "develop" ]; then
+              echo $CLASPRC_JSON_TEST > ~/.clasprc.json
+              echo $CLASP_JSON_SLASHCOMMAND_TEST > .clasp.json
               npx @google/clasp push
             else
               echo "${CIRCLE_BRANCH} isn't deploy branch."
