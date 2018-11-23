@@ -6,8 +6,13 @@
   "scripts": {
     "lint": "tslint --fix 'src/**/*.ts' 'src/**/**/*.ts'",
     "test": "jest",
-    "build": "npm run lint && npm run test && rimraf dist && webpack && cpx src/appsscript.json dist",
-    "deploy": "npm run build && clasp push"
+    "clean": "rimraf build && rimraf dist",
+    "build_outgoing": "npm run lint && npm run test && npm run clean && webpack && npm run copy_outgoing",
+    "copy_outgoing": "cpx src/appsscript.json dist && cp build/outgoing.bundle.js dist/bundle.js",
+    "deploy_outgoing": "npm run build_outgoing && cp .clasp.outgoing.json .clasp.json && clasp push",
+    "build_slashcommand": "npm run lint && npm run test && npm run clean && webpack && npm run copy_slashcommand",
+    "copy_slashcommand": "cpx src/appsscript.json dist && cp build/slashcommand.bundle.js dist/bundle.js",
+    "deploy_slashcommand": "npm run build_slashcommand && cp .clasp.slashcommand.json .clasp.json && clasp push"
   },
   "repository": {
     "type": "git",

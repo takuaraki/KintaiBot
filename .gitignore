@@ -12,7 +12,10 @@ node_modules/
 .idea/
 
 # Build directory
+build/
 dist/
 
 # clasp
 .clasp.json
+.clasp.outgoing.json
+.clasp.slashcommand.json
