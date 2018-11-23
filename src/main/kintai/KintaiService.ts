@@ -35,9 +35,15 @@ export class KintaiService {
       }
     }
     var arrData = [
-      [kintai.getTargetDate(), kintai.getType(), kintai.getUserName(), kintai.getBodyText()]
+      [
+        kintai.getTargetDate(),
+        kintai.getType(),
+        kintai.getUserName(),
+        kintai.getBodyText(),
+        kintai.getUserId()
+      ]
     ];
-    this.sheet.getRange(newLineRow, 1, 1, 4).setValues(arrData);
+    this.sheet.getRange(newLineRow, 1, 1, 5).setValues(arrData);
   }
 
   /**
@@ -66,7 +72,8 @@ export class KintaiService {
         var type = KintaiType.convert(kintaiValues[row][1] as string);
         var name = kintaiValues[row][2] as string;
         var text = kintaiValues[row][3] as string;
-        kintaiInfoArray.push(new KintaiInfo(targetDateText, type, name, text));
+        var userId = kintaiValues[row][4] as string;
+        kintaiInfoArray.push(new KintaiInfo(targetDateText, type, name, text, userId));
       }
     }
     return kintaiInfoArray;

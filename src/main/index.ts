@@ -18,11 +18,11 @@ global.doPost = (event: PostEvent): void => {
   } else if (text == 'Reminder: 明日の勤怠は？') {
     sendNextDaysKintai(channel);
   } else {
-    var userName = event.parameter['user_name'];
     var userId = event.parameter['user_id'];
+    var userName = event.parameter['user_name'];
     var inputTexts = InputTextExtractor.extract(text);
     inputTexts.forEach(input => {
-      saveKintai(channel, userName, userId, input);
+      saveKintai(channel, userId, userName, input);
     });
   }
 };
@@ -32,9 +32,10 @@ global.doPost = (event: PostEvent): void => {
  *
  * @param channel  Slackのチャンネル
  * @param userName ユーザー名
+ * @param userId   SlackのユーザーID
  * @param text     本文
  */
-function saveKintai(channel: SlackChannel, userName: string, userId: string, text: string) {
+function saveKintai(channel: SlackChannel, userId: string, userName: string, text: string) {
   var now = new Date();
   var kintaiService = new KintaiService(channel);
   var targetDateExtractor = new TargetDateExtractor(now);
@@ -42,7 +43,7 @@ function saveKintai(channel: SlackChannel, userName: string, userId: string, tex
   var kintaiType = KintaiTypeExtractor.extract(text);
   var extractedName = NameExtractor.extract(text);
   var name = extractedName != null ? extractedName : userName;
-  kintaiService.register(new KintaiInfo(targetDate, kintaiType, name, text));
+  kintaiService.register(new KintaiInfo(targetDate, kintaiType, userId, name, text));
 
   var slackService = new SlackService();
   slackService.postMessage(
