@@ -10,8 +10,10 @@ global.doPost = (event: PostEvent): object => {
   var channel = SlackChannel.convert(event.parameter['channel_name']);
   var message = getKintaiList(channel, userId);
   return ContentService.createTextOutput()
-    .setMimeType(ContentService.MimeType.TEXT)
-    .setContent(message);
+    .setMimeType(ContentService.MimeType.JSON)
+    .setContent(JSON.stringify({
+      "text" : message
+    }));
 };
 
 /**
