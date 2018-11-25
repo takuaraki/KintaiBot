@@ -1,15 +1,17 @@
 import { PostEvent } from './PostEvent';
 import { KintaiService } from './kintai/KintaiService';
 import { SlackChannel } from './slack/SlackChannel';
-import { SlackService } from './slack/SlackService';
 import { MessageGenerator } from './generators/MessageGenerator';
 
 declare var global: any;
 
-global.doPost = (event: PostEvent): void => {
+global.doPost = (event: PostEvent): object => {
   var userId = event.parameter['user_id'];
   var channel = SlackChannel.convert(event.parameter['channel_name']);
-  sendKintaiList(channel, userId);
+  var message = getKintaiList(channel, userId);
+  return ContentService.createTextOutput()
+    .setMimeType(ContentService.MimeType.TEXT)
+    .setContent(message);
 };
 
 /**
@@ -18,7 +20,7 @@ global.doPost = (event: PostEvent): void => {
  * @param channel Slackのチャンネル
  * @param userId  SlackのユーザーID
  */
-function sendKintaiList(channel: SlackChannel, userId: string) {
+function getKintaiList(channel: SlackChannel, userId: string): string {
   var kintaiService = new KintaiService(channel);
   var kintaiInfoArray = kintaiService.getKintaiList(userId);
 
@@ -28,6 +30,5 @@ function sendKintaiList(channel: SlackChannel, userId: string) {
     message += `${kintaiInfo.getTargetDate()} ${kintaiInfo.getType()} ${body}\n`;
   });
 
-  var slackService = new SlackService();
-  slackService.postEphemeral(channel, message, userId);
+  return message;
 }
