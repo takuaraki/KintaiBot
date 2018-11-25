@@ -4,8 +4,8 @@ const GasPlugin = require("gas-webpack-plugin");
 module.exports = {
   mode: 'development',
   entry: {
-    outgoing: './src/main/index.ts', // TODO: rename to index_outgoing.ts
-    slashcommand: './src/main/index.ts' // TODO: add index_slashcommand.ts
+    outgoing: './src/main/index_outgoing.ts',
+    slashcommand: './src/main/index_slashcommand.ts'
   },
   devtool: false,
   output: {
