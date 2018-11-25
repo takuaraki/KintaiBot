@@ -12,7 +12,7 @@ global.doPost = (event: PostEvent): object => {
   return ContentService.createTextOutput()
     .setMimeType(ContentService.MimeType.JSON)
     .setContent(JSON.stringify({
-      "text" : message
+      "text" :  "登録されている勤怠情報\n" + message
     }));
 };
 
