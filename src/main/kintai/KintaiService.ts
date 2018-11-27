@@ -98,7 +98,7 @@ export class KintaiService {
       var date = cellData as Date;
       var previousDay = new Date();
       previousDay.setDate(previousDay.getDate() - 1);
-      if (userId == registeredUserId) {
+      if (userId == registeredUserId && date > previousDay) {
         var dateText = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
         var type = KintaiType.convert(kintaiValues[row][1] as string);
         var name = kintaiValues[row][2] as string;
