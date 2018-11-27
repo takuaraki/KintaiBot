@@ -7,6 +7,7 @@ import { SlackChannel } from './slack/SlackChannel';
 import { NameExtractor } from './extractors/NameExtractor';
 import { InputTextExtractor } from './extractors/InputTextExtractor';
 import { SlackService } from './slack/SlackService';
+import { PostEvent } from './PostEvent';
 
 declare var global: any;
 
@@ -89,17 +90,4 @@ function sendNextDaysKintai(channel: SlackChannel) {
     var slackService = new SlackService();
     slackService.postMessage(channel, MessageGenerator.generate(today, kintaiInfoArray));
   }
-}
-
-class PostEvent {
-  queryString: string;
-  parameter: { [key: string]: string };
-  parameters: { [key: string]: [string] };
-  contentLenth: number;
-  postData: {
-    length: number;
-    type: string;
-    contents: string;
-    name: string;
-  };
 }

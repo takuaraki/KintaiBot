@@ -1,0 +1,12 @@
+export class PostEvent {
+  queryString: string;
+  parameter: { [key: string]: string };
+  parameters: { [key: string]: [string] };
+  contentLenth: number;
+  postData: {
+    length: number;
+    type: string;
+    contents: string;
+    name: string;
+  };
+}

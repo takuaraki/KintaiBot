@@ -78,4 +78,35 @@ export class KintaiService {
     }
     return kintaiInfoArray;
   }
+
+  /**
+   * ユーザーの現在日以降の勤怠リストを取得する
+   *
+   * @param userId SlackのユーザーID
+   */
+  getKintaiList(userId: string): Array<KintaiInfo> {
+    var kintaiInfoArray = new Array<KintaiInfo>();
+
+    var maxRowCount = 10000;
+    var kintaiValues = this.sheet.getSheetValues(1, 1, maxRowCount, 5);
+    for (var row = 1; row < maxRowCount; row++) {
+      var cellData = kintaiValues[row][0];
+      if (cellData == '') {
+        break;
+      }
+      var registeredUserId = kintaiValues[row][4] as string;
+      var date = cellData as Date;
+      var previousDay = new Date();
+      previousDay.setDate(previousDay.getDate() - 1);
+      if (userId == registeredUserId && date > previousDay) {
+        var dateText = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
+        var type = KintaiType.convert(kintaiValues[row][1] as string);
+        var name = kintaiValues[row][2] as string;
+        var text = kintaiValues[row][3] as string;
+
+        kintaiInfoArray.push(new KintaiInfo(dateText, type, userId, name, text));
+      }
+    }
+    return kintaiInfoArray;
+  }
 }
