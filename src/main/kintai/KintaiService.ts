@@ -57,7 +57,7 @@ export class KintaiService {
     var kintaiInfoArray = new Array<KintaiInfo>();
 
     var maxRowCount = 10000;
-    var kintaiValues = this.sheet.getSheetValues(1, 1, maxRowCount, 4);
+    var kintaiValues = this.sheet.getSheetValues(1, 1, maxRowCount, 5);
     for (var row = 1; row < maxRowCount; row++) {
       var cellData = kintaiValues[row][0];
       if (cellData == '') {
@@ -73,7 +73,7 @@ export class KintaiService {
         var name = kintaiValues[row][2] as string;
         var text = kintaiValues[row][3] as string;
         var userId = kintaiValues[row][4] as string;
-        kintaiInfoArray.push(new KintaiInfo(targetDateText, type, name, text, userId));
+        kintaiInfoArray.push(new KintaiInfo(targetDateText, type, userId, name, text));
       }
     }
     return kintaiInfoArray;
@@ -88,7 +88,7 @@ export class KintaiService {
     var kintaiInfoArray = new Array<KintaiInfo>();
 
     var maxRowCount = 10000;
-    var kintaiValues = this.sheet.getSheetValues(1, 1, maxRowCount, 4);
+    var kintaiValues = this.sheet.getSheetValues(1, 1, maxRowCount, 5);
     for (var row = 1; row < maxRowCount; row++) {
       var cellData = kintaiValues[row][0];
       if (cellData == '') {
@@ -98,13 +98,13 @@ export class KintaiService {
       var date = cellData as Date;
       var previousDay = new Date();
       previousDay.setDate(previousDay.getDate() - 1);
-      if (userId == registeredUserId) {
+      if (userId == registeredUserId && date > previousDay) {
         var dateText = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
         var type = KintaiType.convert(kintaiValues[row][1] as string);
         var name = kintaiValues[row][2] as string;
         var text = kintaiValues[row][3] as string;
 
-        kintaiInfoArray.push(new KintaiInfo(dateText, type, name, text, userId));
+        kintaiInfoArray.push(new KintaiInfo(dateText, type, userId, name, text));
       }
     }
     return kintaiInfoArray;
