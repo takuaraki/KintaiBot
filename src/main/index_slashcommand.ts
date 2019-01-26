@@ -3,15 +3,18 @@ import { KintaiService } from './kintai/KintaiService';
 import { SlackChannel } from './slack/SlackChannel';
 import { MessageGenerator } from './generators/MessageGenerator';
 
-declare var global: any;
+declare let global: any;
 
 global.doPost = (event: PostEvent): object => {
-  var userId = event.parameter['user_id'];
+  const userId = event.parameter['user_id'];
   const channel = SlackChannel.convert(event.parameter['channel_name']);
   if (channel == null) {
     return createOutput('/kintai は、このチャンネルには対応していません :bow:');
   }
-  var message = getKintaiList(channel, userId);
+  const message = getKintaiList(channel, userId);
+  if (message == null) {
+    return createOutput('登録されている勤怠情報はありません。');
+  }
   return createOutput('登録されている勤怠情報\n' + message);
 };
 
@@ -37,12 +40,16 @@ function createOutput(text: string): GoogleAppsScript.Content.TextOutput {
  * @param userId  SlackのユーザーID
  */
 function getKintaiList(channel: SlackChannel, userId: string): string {
-  var kintaiService = new KintaiService(channel);
-  var kintaiInfoArray = kintaiService.getKintaiList(userId);
+  const kintaiService = new KintaiService(channel);
+  const kintaiInfoArray = kintaiService.getKintaiList(userId);
 
-  var message = '';
+  if (kintaiInfoArray.length == 0) {
+    return null;
+  }
+
+  let message = '';
   kintaiInfoArray.forEach(kintaiInfo => {
-    var body = MessageGenerator.removeUnnecessaryText(kintaiInfo.getBodyText());
+    const body = MessageGenerator.removeUnnecessaryText(kintaiInfo.getBodyText());
     message += `${kintaiInfo.getTargetDate()} ${kintaiInfo.getType()} ${body}\n`;
   });
 

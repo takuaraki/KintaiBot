@@ -11,9 +11,9 @@ export class KintaiService {
   private sheet: Sheet;
 
   constructor(channel: SlackChannel) {
-    var folderId = PropertiesService.getScriptProperties().getProperty('KINTAI_FOLDER_ID');
-    var kintaiFolder = DriveApp.getFolderById(folderId);
-    var kintaiFile = kintaiFolder.getFilesByName(channel).next();
+    const folderId = PropertiesService.getScriptProperties().getProperty('KINTAI_FOLDER_ID');
+    const kintaiFolder = DriveApp.getFolderById(folderId);
+    const kintaiFile = kintaiFolder.getFilesByName(channel).next();
     this.spreadSheet = SpreadsheetApp.open(kintaiFile);
     this.sheet = this.spreadSheet.getSheets()[0];
   }
@@ -24,17 +24,17 @@ export class KintaiService {
    * @param kintai 勤怠情報
    */
   register(kintai: KintaiInfo) {
-    var maxRowCount = 10000;
-    var kintaiValues = this.sheet.getSheetValues(1, 1, maxRowCount, 3);
-    var newLineRow = -1;
-    for (var row = 0; row < maxRowCount; row++) {
-      var dateCell = kintaiValues[row][0];
+    const maxRowCount = 10000;
+    const kintaiValues = this.sheet.getSheetValues(1, 1, maxRowCount, 3);
+    let newLineRow = -1;
+    for (let row = 0; row < maxRowCount; row++) {
+      const dateCell = kintaiValues[row][0];
       if (dateCell == '') {
         newLineRow = row + 1;
         break;
       }
     }
-    var arrData = [
+    const arrData = [
       [
         kintai.getTargetDate(),
         kintai.getType(),
@@ -52,27 +52,27 @@ export class KintaiService {
    * @param targetDate 取得対象日
    */
   getKintai(targetDate: Date): Array<KintaiInfo> {
-    var targetDateText = `${targetDate.getFullYear()}/${targetDate.getMonth() +
+    const targetDateText = `${targetDate.getFullYear()}/${targetDate.getMonth() +
       1}/${targetDate.getDate()}`;
-    var kintaiInfoArray = new Array<KintaiInfo>();
+    const kintaiInfoArray = new Array<KintaiInfo>();
 
-    var maxRowCount = 10000;
-    var kintaiValues = this.sheet.getSheetValues(1, 1, maxRowCount, 5);
-    for (var row = 1; row < maxRowCount; row++) {
-      var cellData = kintaiValues[row][0];
+    const maxRowCount = 10000;
+    const kintaiValues = this.sheet.getSheetValues(1, 1, maxRowCount, 5);
+    for (let row = 1; row < maxRowCount; row++) {
+      const cellData = kintaiValues[row][0];
       if (cellData == '') {
         break;
       }
-      var date = cellData as Date;
+      const date = cellData as Date;
       if (
         date.getFullYear() == targetDate.getFullYear() &&
         date.getMonth() == targetDate.getMonth() &&
         date.getDate() == targetDate.getDate()
       ) {
-        var type = KintaiType.convert(kintaiValues[row][1] as string);
-        var name = kintaiValues[row][2] as string;
-        var text = kintaiValues[row][3] as string;
-        var userId = kintaiValues[row][4] as string;
+        const type = KintaiType.convert(kintaiValues[row][1] as string);
+        const name = kintaiValues[row][2] as string;
+        const text = kintaiValues[row][3] as string;
+        const userId = kintaiValues[row][4] as string;
         kintaiInfoArray.push(new KintaiInfo(targetDateText, type, userId, name, text));
       }
     }
@@ -85,24 +85,24 @@ export class KintaiService {
    * @param userId SlackのユーザーID
    */
   getKintaiList(userId: string): Array<KintaiInfo> {
-    var kintaiInfoArray = new Array<KintaiInfo>();
+    const kintaiInfoArray = new Array<KintaiInfo>();
 
-    var maxRowCount = 10000;
-    var kintaiValues = this.sheet.getSheetValues(1, 1, maxRowCount, 5);
-    for (var row = 1; row < maxRowCount; row++) {
-      var cellData = kintaiValues[row][0];
+    const maxRowCount = 10000;
+    const kintaiValues = this.sheet.getSheetValues(1, 1, maxRowCount, 5);
+    for (let row = 1; row < maxRowCount; row++) {
+      const cellData = kintaiValues[row][0];
       if (cellData == '') {
         break;
       }
-      var registeredUserId = kintaiValues[row][4] as string;
-      var date = cellData as Date;
-      var previousDay = new Date();
+      const registeredUserId = kintaiValues[row][4] as string;
+      const date = cellData as Date;
+      const previousDay = new Date();
       previousDay.setDate(previousDay.getDate() - 1);
       if (userId == registeredUserId && date > previousDay) {
-        var dateText = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
-        var type = KintaiType.convert(kintaiValues[row][1] as string);
-        var name = kintaiValues[row][2] as string;
-        var text = kintaiValues[row][3] as string;
+        const dateText = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
+        const type = KintaiType.convert(kintaiValues[row][1] as string);
+        const name = kintaiValues[row][2] as string;
+        const text = kintaiValues[row][3] as string;
 
         kintaiInfoArray.push(new KintaiInfo(dateText, type, userId, name, text));
       }

@@ -14,16 +14,16 @@ export class TargetDateExtractor {
    * @param text Slackの本文
    */
   extract(text: string): string {
-    var matchResult = text.match(this.regexpSlash);
+    let matchResult = text.match(this.regexpSlash);
     if (matchResult == null) {
       matchResult = text.match(this.regexpHyphen);
     }
     if (matchResult == null) {
       matchResult = text.match(this.regexpGappi);
     }
-    var year = this.now.getFullYear();
-    let month = matchResult[1];
-    let day = matchResult[2];
+    let year = this.now.getFullYear();
+    const month = matchResult[1];
+    const day = matchResult[2];
     if (parseInt(month) < this.now.getMonth() + 1) {
       year += 1;
     } else if (parseInt(month) == this.now.getMonth() + 1) {

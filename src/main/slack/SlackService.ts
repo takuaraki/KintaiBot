@@ -15,8 +15,10 @@ export class SlackService {
    * メッセージを送信する
    */
   postMessage(channel: SlackChannel, text: string) {
-    var baseUrl = 'https://slack.com/api/chat.postMessage';
-    var url = `${baseUrl}?token=${this.token}&channel=${channel}&text=${encodeURIComponent(text)}`;
+    const baseUrl = 'https://slack.com/api/chat.postMessage';
+    const url = `${baseUrl}?token=${this.token}&channel=${channel}&text=${encodeURIComponent(
+      text
+    )}`;
     const options: URLFetchRequestOptions = {
       method: 'post'
     };
@@ -27,8 +29,8 @@ export class SlackService {
    * 特定のユーザーにだけ見えるメッセージを送信する
    */
   postEphemeral(channel: SlackChannel, text: string, user: string) {
-    var baseUrl = 'https://slack.com/api/chat.postEphemeral';
-    var url = `${baseUrl}?token=${this.token}&channel=${channel}&text=${encodeURIComponent(
+    const baseUrl = 'https://slack.com/api/chat.postEphemeral';
+    const url = `${baseUrl}?token=${this.token}&channel=${channel}&text=${encodeURIComponent(
       text
     )}&user=${user}`;
     const options: URLFetchRequestOptions = {

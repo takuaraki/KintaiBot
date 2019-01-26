@@ -10,7 +10,7 @@ export class NameExtractor {
    * @param text Slackの本文
    */
   static extract(text: string): string | null {
-    let matchResult = text.match(this.regexpName);
+    const matchResult = text.match(this.regexpName);
     if (matchResult == null) {
       return null;
     }

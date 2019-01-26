@@ -2,8 +2,8 @@ import { TargetDateExtractor } from '../../main/extractors/TargetDateExtractor';
 
 describe('TargetDateExtractor', () => {
   describe('extract', () => {
-    let now = new Date(2018, 9 - 1, 4);
-    let tester = new TargetDateExtractor(now);
+    const now = new Date(2018, 9 - 1, 4);
+    const tester = new TargetDateExtractor(now);
 
     it('slash divide case1. M/dd', () => {
       expect(tester.extract('【A休申請】9/12 私用のため')).toBe(`${now.getFullYear()}/9/12`);
@@ -59,8 +59,8 @@ describe('TargetDateExtractor', () => {
   });
 
   describe('extract beyond year', () => {
-    let now = new Date(2018, 12 - 1, 20);
-    let tester = new TargetDateExtractor(now);
+    const now = new Date(2018, 12 - 1, 20);
+    const tester = new TargetDateExtractor(now);
 
     it('kintai for next year', () => {
       // now = 2018/12/20. In this case, 1/8 may mean 2019/1/8.

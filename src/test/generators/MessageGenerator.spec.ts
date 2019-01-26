@@ -4,7 +4,7 @@ import { KintaiInfo, KintaiType } from '../../main/kintai/KintaiInfo';
 describe('MessageGenerator', () => {
   describe('generate', () => {
     it('regular case', () => {
-      let kintaiInfo = [
+      const kintaiInfo = [
         // 休み
         new KintaiInfo(
           '2018/09/11',
@@ -160,7 +160,7 @@ describe('MessageGenerator', () => {
   });
 });
 
-let expectMessage = `2018/09/11 の勤怠です。
+const expectMessage = `2018/09/11 の勤怠です。
 \`\`\`
 【休み】
 b             私用のため

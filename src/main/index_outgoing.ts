@@ -9,19 +9,19 @@ import { InputTextExtractor } from './extractors/InputTextExtractor';
 import { SlackService } from './slack/SlackService';
 import { PostEvent } from './PostEvent';
 
-declare var global: any;
+declare let global: any;
 
 global.doPost = (event: PostEvent): void => {
-  var text = event.parameter['text'];
-  var channel = SlackChannel.convert(event.parameter['channel_name']);
+  const text = event.parameter['text'];
+  const channel = SlackChannel.convert(event.parameter['channel_name']);
   if (text == 'Reminder: 今日の勤怠は？') {
     sendTodaysKintai(channel);
   } else if (text == 'Reminder: 明日の勤怠は？') {
     sendNextDaysKintai(channel);
   } else {
-    var userId = event.parameter['user_id'];
-    var userName = event.parameter['user_name'];
-    var inputTexts = InputTextExtractor.extract(text);
+    const userId = event.parameter['user_id'];
+    const userName = event.parameter['user_name'];
+    const inputTexts = InputTextExtractor.extract(text);
     inputTexts.forEach(input => {
       saveKintai(channel, userId, userName, input);
     });
@@ -37,16 +37,16 @@ global.doPost = (event: PostEvent): void => {
  * @param text     本文
  */
 function saveKintai(channel: SlackChannel, userId: string, userName: string, text: string) {
-  var now = new Date();
-  var kintaiService = new KintaiService(channel);
-  var targetDateExtractor = new TargetDateExtractor(now);
-  var targetDate = targetDateExtractor.extract(text);
-  var kintaiType = KintaiTypeExtractor.extract(text);
-  var extractedName = NameExtractor.extract(text);
-  var name = extractedName != null ? extractedName : userName;
+  const now = new Date();
+  const kintaiService = new KintaiService(channel);
+  const targetDateExtractor = new TargetDateExtractor(now);
+  const targetDate = targetDateExtractor.extract(text);
+  const kintaiType = KintaiTypeExtractor.extract(text);
+  const extractedName = NameExtractor.extract(text);
+  const name = extractedName != null ? extractedName : userName;
   kintaiService.register(new KintaiInfo(targetDate, kintaiType, userId, name, text));
 
-  var slackService = new SlackService();
+  const slackService = new SlackService();
   slackService.postMessage(
     SlackChannel.botTest,
     `I saved Kintai. \`date: ${targetDate}, type: ${kintaiType}, name: ${name} , text: ${text}\``
@@ -65,12 +65,12 @@ function saveKintai(channel: SlackChannel, userId: string, userName: string, tex
  * @param channel Slackのチャンネル名
  */
 function sendTodaysKintai(channel: SlackChannel) {
-  var now = new Date();
-  var kintaiService = new KintaiService(channel);
-  var kintaiInfoArray = kintaiService.getKintai(now);
+  const now = new Date();
+  const kintaiService = new KintaiService(channel);
+  const kintaiInfoArray = kintaiService.getKintai(now);
   if (kintaiInfoArray.length > 0) {
-    var today = `${now.getFullYear()}/${now.getMonth() + 1}/${now.getDate()}`;
-    var slackService = new SlackService();
+    const today = `${now.getFullYear()}/${now.getMonth() + 1}/${now.getDate()}`;
+    const slackService = new SlackService();
     slackService.postMessage(channel, MessageGenerator.generate(today, kintaiInfoArray));
   }
 }
@@ -81,13 +81,13 @@ function sendTodaysKintai(channel: SlackChannel) {
  * @param channel Slackのチャンネル名
  */
 function sendNextDaysKintai(channel: SlackChannel) {
-  var nextDay = new Date();
+  const nextDay = new Date();
   nextDay.setDate(nextDay.getDate() + 1);
-  var kintaiService = new KintaiService(channel);
-  var kintaiInfoArray = kintaiService.getKintai(nextDay);
+  const kintaiService = new KintaiService(channel);
+  const kintaiInfoArray = kintaiService.getKintai(nextDay);
   if (kintaiInfoArray.length > 0) {
-    var today = `${nextDay.getFullYear()}/${nextDay.getMonth() + 1}/${nextDay.getDate()}`;
-    var slackService = new SlackService();
+    const today = `${nextDay.getFullYear()}/${nextDay.getMonth() + 1}/${nextDay.getDate()}`;
+    const slackService = new SlackService();
     slackService.postMessage(channel, MessageGenerator.generate(today, kintaiInfoArray));
   }
 }

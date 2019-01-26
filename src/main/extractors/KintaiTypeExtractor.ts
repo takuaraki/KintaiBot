@@ -12,7 +12,7 @@ export class KintaiTypeExtractor {
    * @param text Slackの本文
    */
   static extract(text: string): KintaiType {
-    let matchResult = text.match(this.regexpType);
+    const matchResult = text.match(this.regexpType);
     if (matchResult == null) {
       return KintaiType.その他;
     }
