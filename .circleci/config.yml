@@ -42,6 +42,7 @@ jobs:
       - run:
           name: Deploy slashcommand module
           command: |
+            cat dist/bundle.js
             if [ ${CIRCLE_BRANCH} = "master" ]; then
               echo $CLASPRC_JSON_PRODUCTION > ~/.clasprc.json
               echo $CLASP_JSON_SLASHCOMMAND_PRODUCTION > .clasp.json
