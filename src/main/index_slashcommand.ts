@@ -17,8 +17,8 @@ global.doPost = (event: PostEvent): object => {
 
 /**
  * コマンドの実行結果を返す
- * 
- * @param text 
+ *
+ * @param text
  */
 function createOutput(text: string): GoogleAppsScript.Content.TextOutput {
   return ContentService.createTextOutput()
