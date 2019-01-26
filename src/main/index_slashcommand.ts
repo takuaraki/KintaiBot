@@ -7,16 +7,28 @@ declare var global: any;
 
 global.doPost = (event: PostEvent): object => {
   var userId = event.parameter['user_id'];
-  var channel = SlackChannel.convert(event.parameter['channel_name']);
+  const channel = SlackChannel.convert(event.parameter['channel_name']);
+  if (channel == null) {
+    return createOutput('/kintai は、このチャンネルには対応していません :bow:');
+  }
   var message = getKintaiList(channel, userId);
+  return createOutput('登録されている勤怠情報\n' + message);
+};
+
+/**
+ * コマンドの実行結果を返す
+ * 
+ * @param text 
+ */
+function createOutput(text: string): GoogleAppsScript.Content.TextOutput {
   return ContentService.createTextOutput()
     .setMimeType(ContentService.MimeType.JSON)
     .setContent(
       JSON.stringify({
-        text: '登録されている勤怠情報\n' + message
+        text: text
       })
     );
-};
+}
 
 /**
  * ユーザーの現在日以降の勤怠リストを送信する
