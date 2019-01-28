@@ -11,11 +11,11 @@ global.doPost = (event: PostEvent): object => {
   if (channel == null) {
     return createOutput('/kintai は、このチャンネルには対応していません :bow:');
   }
-  const message = getKintaiList(channel, userId);
-  if (message == null) {
+  const attachments = getKintaiAttachments(channel, userId);
+  if (attachments == null) {
     return createOutput('登録されている勤怠情報はありません。');
   }
-  return createOutput('登録されている勤怠情報\n' + message);
+  return createOutput('登録されている勤怠情報', attachments);
 };
 
 /**
@@ -23,12 +23,13 @@ global.doPost = (event: PostEvent): object => {
  *
  * @param text
  */
-function createOutput(text: string): GoogleAppsScript.Content.TextOutput {
+function createOutput(text: string, attachments?: object[]): GoogleAppsScript.Content.TextOutput {
   return ContentService.createTextOutput()
     .setMimeType(ContentService.MimeType.JSON)
     .setContent(
       JSON.stringify({
-        text: text
+        text: text,
+        attachments: attachments
       })
     );
 }
@@ -39,7 +40,7 @@ function createOutput(text: string): GoogleAppsScript.Content.TextOutput {
  * @param channel Slackのチャンネル
  * @param userId  SlackのユーザーID
  */
-function getKintaiList(channel: SlackChannel, userId: string): string {
+function getKintaiAttachments(channel: SlackChannel, userId: string): object[] {
   const kintaiService = new KintaiService(channel);
   const kintaiInfoArray = kintaiService.getKintaiList(userId);
 
@@ -47,11 +48,29 @@ function getKintaiList(channel: SlackChannel, userId: string): string {
     return null;
   }
 
-  let message = '';
-  kintaiInfoArray.forEach(kintaiInfo => {
+  const attatchments = kintaiInfoArray.map(kintaiInfo => {
     const body = MessageGenerator.removeUnnecessaryText(kintaiInfo.getBodyText());
-    message += `${kintaiInfo.getTargetDate()} ${kintaiInfo.getType()} ${body}\n`;
+    const text = `${kintaiInfo.getTargetDate()} ${kintaiInfo.getType()} ${body}`;
+    return createAttatchment(text);
   });
 
-  return message;
+  return attatchments;
+}
+
+function createAttatchment(text: string): object {
+  return {
+    fallback: '登録されている勤怠です',
+    title: text,
+    callback_id: 'kintaiId1',
+    color: '#3251C2',
+    attachment_type: 'default',
+    actions: [
+      {
+        name: 'deleteButton',
+        text: '削除',
+        type: 'button',
+        style: 'danger'
+      }
+    ]
+  };
 }
