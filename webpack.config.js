@@ -5,7 +5,8 @@ module.exports = {
   mode: 'development',
   entry: {
     outgoing: './src/main/index_outgoing.ts',
-    slashcommand: './src/main/index_slashcommand.ts'
+    slashcommand: './src/main/index_slashcommand.ts',
+    interactive: './src/main/index_interactive.ts',
   },
   devtool: false,
   output: {

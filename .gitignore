@@ -17,5 +17,6 @@ dist/
 
 # clasp
 .clasp.json
+.clasp.interactive.json
 .clasp.outgoing.json
 .clasp.slashcommand.json
