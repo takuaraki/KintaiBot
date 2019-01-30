@@ -5,5 +5,5 @@ declare let global: any;
 global.doPost = (event: PostEvent): object => {
   return ContentService.createTextOutput()
     .setMimeType(ContentService.MimeType.JSON)
-    .setContent(event.postData.contents);
+    .setContent(JSON.parse(event.parameter.payload).callback_id);
 };
