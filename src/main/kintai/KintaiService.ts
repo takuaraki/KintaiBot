@@ -111,4 +111,24 @@ export class KintaiService {
     }
     return kintaiInfoArray;
   }
+
+  /**
+   * 勤怠情報を削除する
+   *
+   * @param id 削除したい勤怠のID
+   */
+  delete(id: string) {
+    const maxRowCount = 10000;
+    const kintaiValues = this.sheet.getSheetValues(1, 1, maxRowCount, 6);
+    for (let row = 1; row < maxRowCount; row++) {
+      const kintaiId = kintaiValues[row][5] as string;
+      if (kintaiId == '') {
+        break;
+      }
+      if (id == kintaiId) {
+        this.sheet.deleteRow(row);
+        break;
+      }
+    }
+  }
 }

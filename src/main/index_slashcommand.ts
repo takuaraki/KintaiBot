@@ -51,17 +51,17 @@ function getKintaiAttachments(channel: SlackChannel, userId: string): object[] {
   const attatchments = kintaiInfoArray.map(kintaiInfo => {
     const body = MessageGenerator.removeUnnecessaryText(kintaiInfo.getBodyText());
     const text = `${kintaiInfo.getTargetDate()} ${kintaiInfo.getType()} ${body}`;
-    return createAttatchment(text);
+    return createAttatchment(kintaiInfo.getId(), text);
   });
 
   return attatchments;
 }
 
-function createAttatchment(text: string): object {
+function createAttatchment(kintaiId: string, text: string): object {
   return {
     fallback: '登録されている勤怠です',
     title: text,
-    callback_id: 'kintaiId1',
+    callback_id: kintaiId,
     color: '#3251C2',
     attachment_type: 'default',
     actions: [
