@@ -117,7 +117,7 @@ export class KintaiService {
    *
    * @param id 削除したい勤怠のID
    */
-  delete(id: string): void {
+  deleteKintai(id: string): void {
     const maxRowCount = 10000;
     const kintaiValues = this.sheet.getSheetValues(1, 1, maxRowCount, 6);
     for (let row = 1; row < maxRowCount; row++) {
