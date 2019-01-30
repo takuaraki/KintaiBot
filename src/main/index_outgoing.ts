@@ -44,7 +44,9 @@ function saveKintai(channel: SlackChannel, userId: string, userName: string, tex
   const kintaiType = KintaiTypeExtractor.extract(text);
   const extractedName = NameExtractor.extract(text);
   const name = extractedName != null ? extractedName : userName;
-  kintaiService.register(new KintaiInfo(targetDate, kintaiType, userId, name, text));
+  kintaiService.register(
+    new KintaiInfo(Utilities.getUuid(), targetDate, kintaiType, userId, name, text)
+  );
 
   const slackService = new SlackService();
   slackService.postMessage(

@@ -1,11 +1,16 @@
 export class KintaiInfo {
   constructor(
+    private id: string,
     private targetDate: string,
     private type: KintaiType,
     private userId: string,
     private userName: string,
     private bodyText: string
   ) {}
+
+  getId(): string {
+    return this.id;
+  }
 
   getTargetDate(): string {
     return this.targetDate;

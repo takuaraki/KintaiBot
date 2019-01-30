@@ -7,6 +7,7 @@ describe('MessageGenerator', () => {
       const kintaiInfo = [
         // 休み
         new KintaiInfo(
+          'id',
           '2018/09/11',
           KintaiType.休み,
           'user_id',
@@ -14,6 +15,7 @@ describe('MessageGenerator', () => {
           '【A休申請】2018年09月11日（火） 私用のため【b】'
         ),
         new KintaiInfo(
+          'id',
           '2018/09/11',
           KintaiType.休み,
           'user_id',
@@ -21,6 +23,7 @@ describe('MessageGenerator', () => {
           '【A休申請】2018-09-11(火) 私用のため【hoge】'
         ),
         new KintaiInfo(
+          'id',
           '2018/09/11',
           KintaiType.休み,
           'user_id',
@@ -28,6 +31,7 @@ describe('MessageGenerator', () => {
           '【A休申請】09/11（火） 私用のため【hogehogefuga】'
         ),
         new KintaiInfo(
+          'id',
           '2018/09/11',
           KintaiType.休み,
           'user_id',
@@ -37,6 +41,7 @@ describe('MessageGenerator', () => {
 
         // AM
         new KintaiInfo(
+          'id',
           '2018/09/11',
           KintaiType.AM休,
           'user_id',
@@ -44,6 +49,7 @@ describe('MessageGenerator', () => {
           '【AM休申請】2018/09/11 私用のため'
         ),
         new KintaiInfo(
+          'id',
           '2018/09/11',
           KintaiType.AM休,
           'user_id',
@@ -51,6 +57,7 @@ describe('MessageGenerator', () => {
           '【AM休申請】2018/09/11 私用のため'
         ),
         new KintaiInfo(
+          'id',
           '2018/09/11',
           KintaiType.AM休,
           'user_id',
@@ -58,6 +65,7 @@ describe('MessageGenerator', () => {
           '【AM休申請】2018/09/11 私用のため'
         ),
         new KintaiInfo(
+          'id',
           '2018/09/11',
           KintaiType.AM休,
           'user_id',
@@ -67,6 +75,7 @@ describe('MessageGenerator', () => {
 
         // PM
         new KintaiInfo(
+          'id',
           '2018/09/11',
           KintaiType.PM休,
           'user_id',
@@ -74,6 +83,7 @@ describe('MessageGenerator', () => {
           '【PM休申請】2018/09/11 私用のため'
         ),
         new KintaiInfo(
+          'id',
           '2018/09/11',
           KintaiType.PM休,
           'user_id',
@@ -81,6 +91,7 @@ describe('MessageGenerator', () => {
           '【PM休申請】2018/09/11 私用のため'
         ),
         new KintaiInfo(
+          'id',
           '2018/09/11',
           KintaiType.PM休,
           'user_id',
@@ -88,6 +99,7 @@ describe('MessageGenerator', () => {
           '【PM休申請】2018/09/11 私用のため'
         ),
         new KintaiInfo(
+          'id',
           '2018/09/11',
           KintaiType.PM休,
           'user_id',
@@ -97,6 +109,7 @@ describe('MessageGenerator', () => {
 
         // FT
         new KintaiInfo(
+          'id',
           '2018/09/11',
           KintaiType.FT,
           'user_id',
@@ -104,6 +117,7 @@ describe('MessageGenerator', () => {
           '【FT申請】2018/09/11 私用のため'
         ),
         new KintaiInfo(
+          'id',
           '2018/09/11',
           KintaiType.FT,
           'user_id',
@@ -111,6 +125,7 @@ describe('MessageGenerator', () => {
           '【FT申請】2018/09/11 私用のため'
         ),
         new KintaiInfo(
+          'id',
           '2018/09/11',
           KintaiType.FT,
           'user_id',
@@ -118,6 +133,7 @@ describe('MessageGenerator', () => {
           '【FT申請】2018/09/11 私用のため'
         ),
         new KintaiInfo(
+          'id',
           '2018/09/11',
           KintaiType.FT,
           'user_id',
@@ -127,6 +143,7 @@ describe('MessageGenerator', () => {
 
         // その他
         new KintaiInfo(
+          'id',
           '2018/09/11',
           KintaiType.その他,
           'user_id',
@@ -134,6 +151,7 @@ describe('MessageGenerator', () => {
           '【A休申請取り消し】2018/09/11 私用のため'
         ),
         new KintaiInfo(
+          'id',
           '2018/09/11',
           KintaiType.その他,
           'user_id',
@@ -141,6 +159,7 @@ describe('MessageGenerator', () => {
           '【A休申請取り消し】2018/09/11 私用のため'
         ),
         new KintaiInfo(
+          'id',
           '2018/09/11',
           KintaiType.その他,
           'user_id',
@@ -148,6 +167,7 @@ describe('MessageGenerator', () => {
           '【A休申請取り消し】2018/09/11 私用のため'
         ),
         new KintaiInfo(
+          'id',
           '2018/09/11',
           KintaiType.その他,
           'user_id',

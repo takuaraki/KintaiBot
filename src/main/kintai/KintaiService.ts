@@ -57,7 +57,7 @@ export class KintaiService {
     const kintaiInfoArray = new Array<KintaiInfo>();
 
     const maxRowCount = 10000;
-    const kintaiValues = this.sheet.getSheetValues(1, 1, maxRowCount, 5);
+    const kintaiValues = this.sheet.getSheetValues(1, 1, maxRowCount, 6);
     for (let row = 1; row < maxRowCount; row++) {
       const cellData = kintaiValues[row][0];
       if (cellData == '') {
@@ -73,7 +73,8 @@ export class KintaiService {
         const name = kintaiValues[row][2] as string;
         const text = kintaiValues[row][3] as string;
         const userId = kintaiValues[row][4] as string;
-        kintaiInfoArray.push(new KintaiInfo(targetDateText, type, userId, name, text));
+        const id = kintaiValues[row][5] as string;
+        kintaiInfoArray.push(new KintaiInfo(id, targetDateText, type, userId, name, text));
       }
     }
     return kintaiInfoArray;
@@ -103,8 +104,8 @@ export class KintaiService {
         const type = KintaiType.convert(kintaiValues[row][1] as string);
         const name = kintaiValues[row][2] as string;
         const text = kintaiValues[row][3] as string;
-
-        kintaiInfoArray.push(new KintaiInfo(dateText, type, userId, name, text));
+        const id = kintaiValues[row][5] as string;
+        kintaiInfoArray.push(new KintaiInfo(id, dateText, type, userId, name, text));
       }
     }
     return kintaiInfoArray;
