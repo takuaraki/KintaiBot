@@ -24,11 +24,11 @@ jobs:
           command: |
             if [ ${CIRCLE_BRANCH} = "master" ]; then
               echo $CLASPRC_JSON_PRODUCTION > ~/.clasprc.json
-              echo $CLASP_JSON_OUTGOING_PRODUCTION > .clasp.json
+              echo $CLASP_JSON_OUTGOING_PRODUCTION > .clasp.outgoing.json
               echo y | npm run deploy_outgoing
             elif [ ${CIRCLE_BRANCH} = "develop" ]; then
               echo $CLASPRC_JSON_TEST > ~/.clasprc.json
-              echo $CLASP_JSON_OUTGOING_TEST > .clasp.json
+              echo $CLASP_JSON_OUTGOING_TEST > .clasp.outgoing.json
               echo y | npm run deploy_outgoing
             else
               echo "${CIRCLE_BRANCH} isn't deploy branch."
@@ -38,11 +38,11 @@ jobs:
           command: |
             if [ ${CIRCLE_BRANCH} = "master" ]; then
               echo $CLASPRC_JSON_PRODUCTION > ~/.clasprc.json
-              echo $CLASP_JSON_SLASHCOMMAND_PRODUCTION > .clasp.json
+              echo $CLASP_JSON_SLASHCOMMAND_PRODUCTION > .clasp.slashcommand.json
               echo y | npm run deploy_slashcommand
             elif [ ${CIRCLE_BRANCH} = "develop" ]; then
               echo $CLASPRC_JSON_TEST > ~/.clasprc.json
-              echo $CLASP_JSON_SLASHCOMMAND_TEST > .clasp.json
+              echo $CLASP_JSON_SLASHCOMMAND_TEST > .clasp.slashcommand.json
               echo y | npm run deploy_slashcommand
             else
               echo "${CIRCLE_BRANCH} isn't deploy branch."
@@ -52,11 +52,11 @@ jobs:
           command: |
             if [ ${CIRCLE_BRANCH} = "master" ]; then
               echo $CLASPRC_JSON_PRODUCTION > ~/.clasprc.json
-              echo $CLASP_JSON_INTERACTIVE_PRODUCTION > .clasp.json
+              echo $CLASP_JSON_INTERACTIVE_PRODUCTION > .clasp.interactive.json
               echo y | npm run deploy_interactive
             elif [ ${CIRCLE_BRANCH} = "develop" ]; then
               echo $CLASPRC_JSON_TEST > ~/.clasprc.json
-              echo $CLASP_JSON_INTERACTIVE_TEST > .clasp.json
+              echo $CLASP_JSON_INTERACTIVE_TEST > .clasp.interactive.json
               echo y | npm run deploy_interactive
             else
               echo "${CIRCLE_BRANCH} isn't deploy branch."
