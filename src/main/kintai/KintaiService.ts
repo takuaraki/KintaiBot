@@ -40,10 +40,11 @@ export class KintaiService {
         kintai.getType(),
         kintai.getUserName(),
         kintai.getBodyText(),
-        kintai.getUserId()
+        kintai.getUserId(),
+        kintai.getId()
       ]
     ];
-    this.sheet.getRange(newLineRow, 1, 1, 5).setValues(arrData);
+    this.sheet.getRange(newLineRow, 1, 1, 6).setValues(arrData);
   }
 
   /**
