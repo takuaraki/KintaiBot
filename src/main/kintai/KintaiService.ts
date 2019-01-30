@@ -90,7 +90,7 @@ export class KintaiService {
     const kintaiInfoArray = new Array<KintaiInfo>();
 
     const maxRowCount = 10000;
-    const kintaiValues = this.sheet.getSheetValues(1, 1, maxRowCount, 5);
+    const kintaiValues = this.sheet.getSheetValues(1, 1, maxRowCount, 6);
     for (let row = 1; row < maxRowCount; row++) {
       const cellData = kintaiValues[row][0];
       if (cellData == '') {
