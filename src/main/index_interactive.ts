@@ -12,7 +12,10 @@ global.doPost = (event: PostEvent): object => {
   const kintaiService = new KintaiService(channel);
   const deletedKintai = kintaiService.deleteKintai(payload.callback_id);
   const slackService = new SlackService();
-  slackService.postMessage(channel, `勤怠情報を削除しました:\n\`${deletedKintai.getBodyText()}\``);
+  slackService.postMessage(
+    channel,
+    `勤怠情報を削除しました:\n名前: ${deletedKintai.getUserName()}\n本文: ${deletedKintai.getBodyText()}`
+  );
 
   return ContentService.createTextOutput()
     .setMimeType(ContentService.MimeType.JSON)
