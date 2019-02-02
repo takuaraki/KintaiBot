@@ -113,21 +113,29 @@ export class KintaiService {
   }
 
   /**
-   * 勤怠情報を削除する
+   * 勤怠情報を削除する。削除した勤怠情報を返す
    *
    * @param id 削除したい勤怠のID
    */
-  deleteKintai(id: string): void {
+  deleteKintai(id: string): KintaiInfo {
     const maxRowCount = 10000;
     const kintaiValues = this.sheet.getSheetValues(1, 1, maxRowCount, 6);
     for (let row = 1; row < maxRowCount; row++) {
       const kintaiId = kintaiValues[row][5] as string;
       if (kintaiId == '') {
-        break;
+        return null;
       }
       if (id == kintaiId) {
         this.sheet.deleteRow(row);
-        break;
+
+        const date = kintaiValues[row][0] as Date;
+        const dateText = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
+        const type = KintaiType.convert(kintaiValues[row][1] as string);
+        const name = kintaiValues[row][2] as string;
+        const text = kintaiValues[row][3] as string;
+        const userId = kintaiValues[row][4] as string;
+        const id = kintaiValues[row][5] as string;
+        return new KintaiInfo(id, dateText, type, userId, name, text);
       }
     }
   }
