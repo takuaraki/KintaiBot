@@ -126,7 +126,8 @@ export class KintaiService {
         return null;
       }
       if (id == kintaiId) {
-        this.sheet.deleteRow(row);
+        const rowPosition = row + 1;
+        this.sheet.deleteRow(rowPosition);
 
         const date = kintaiValues[row][0] as Date;
         const dateText = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
